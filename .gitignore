@@ -7,10 +7,12 @@ $RECYCLE.BIN/
 
 # Screenshots, DOM dumps & test artifacts
 *.png
+!qrcode.png
 *.log
 dom_edge.html
 dom_output.html
 dumped_dom.html
+render_qr.html
 test_*.html
 *.ps1
 !assemble_index.ps1
