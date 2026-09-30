@@ -1,0 +1,546 @@
+﻿[
+    {
+        "id":  1,
+        "serial":  "1",
+        "fullName":  "חנוך אלון",
+        "fileName":  "אלון חנוך.jpg",
+        "relativeUrl":  "images/אלון חנוך.jpg",
+        "sizeKB":  1397.6
+    },
+    {
+        "id":  2,
+        "serial":  "2",
+        "fullName":  "יעל אליצור",
+        "fileName":  "אליצור יעל.jpg",
+        "relativeUrl":  "images/אליצור יעל.jpg",
+        "sizeKB":  1122.2
+    },
+    {
+        "id":  3,
+        "serial":  "3",
+        "fullName":  "מטי ויואל אליצור",
+        "fileName":  "אליצור מטי ויואל .jpg",
+        "relativeUrl":  "images/אליצור מטי ויואל .jpg",
+        "sizeKB":  892.2
+    },
+    {
+        "id":  4,
+        "serial":  "4",
+        "fullName":  "יעקב ונחמה אלמו",
+        "fileName":  "אלמו יעקב ונחמה.jpg",
+        "relativeUrl":  "images/אלמו יעקב ונחמה.jpg",
+        "sizeKB":  1046.9
+    },
+    {
+        "id":  5,
+        "serial":  "5",
+        "fullName":  "ניסים ז\"ל ואלה ארז",
+        "fileName":  "ארז ניסין ז\u0027\u0027ל ואלה.jpg",
+        "relativeUrl":  "images/ארז ניסין ז\u0027\u0027ל ואלה.jpg",
+        "sizeKB":  914.8
+    },
+    {
+        "id":  6,
+        "serial":  "6",
+        "fullName":  "ז\u0027אבו ז\u0027\u0027ל ותמר ארליך",
+        "fileName":  "ארליך ז\u0027אבו ז\u0027\u0027ל ותמר.JPG",
+        "relativeUrl":  "images/ארליך ז\u0027אבו ז\u0027\u0027ל ותמר.JPG",
+        "sizeKB":  1231.3
+    },
+    {
+        "id":  7,
+        "serial":  "7",
+        "fullName":  "יעקב וחדוה ארליך",
+        "fileName":  "ארליך יעקב וחדוה.jpg",
+        "relativeUrl":  "images/ארליך יעקב וחדוה.jpg",
+        "sizeKB":  1508.2
+    },
+    {
+        "id":  8,
+        "serial":  "8",
+        "fullName":  "נעמי ז\"ל וזבולון בונה",
+        "fileName":  "בונה נעמי ז\u0027\u0027ל וזבולון.jpg",
+        "relativeUrl":  "images/בונה נעמי ז\u0027\u0027ל וזבולון.jpg",
+        "sizeKB":  1123.9
+    },
+    {
+        "id":  9,
+        "serial":  "9",
+        "fullName":  "צופיה ויעקב בן דנון",
+        "fileName":  "בן דנון צופיה ויעקב.jpg",
+        "relativeUrl":  "images/בן דנון צופיה ויעקב.jpg",
+        "sizeKB":  1471.1
+    },
+    {
+        "id":  10,
+        "serial":  "10",
+        "fullName":  "רבקה ומשולם בן מאיר",
+        "fileName":  "בן מאיר רבקה ומשולם.jpg",
+        "relativeUrl":  "images/בן מאיר רבקה ומשולם.jpg",
+        "sizeKB":  860.6
+    },
+    {
+        "id":  11,
+        "serial":  "11",
+        "fullName":  "אסתר ומשה בן מוחה",
+        "fileName":  "בן מוחה אסתר ומשה.jpg",
+        "relativeUrl":  "images/בן מוחה אסתר ומשה.jpg",
+        "sizeKB":  1034.1
+    },
+    {
+        "id":  12,
+        "serial":  "12",
+        "fullName":  "שושנה ברוכי",
+        "fileName":  "ברוכי שושנה.jpg",
+        "relativeUrl":  "images/ברוכי שושנה.jpg",
+        "sizeKB":  1235.7
+    },
+    {
+        "id":  13,
+        "serial":  "13",
+        "fullName":  "סילביה ברמן",
+        "fileName":  "ברמן סילביה.jpg",
+        "relativeUrl":  "images/ברמן סילביה.jpg",
+        "sizeKB":  1336.8
+    },
+    {
+        "id":  14,
+        "serial":  "14",
+        "fullName":  "הרב אבי ויפה גיסר",
+        "fileName":  "גיסר הרב אבי ויפה.jpg",
+        "relativeUrl":  "images/גיסר הרב אבי ויפה.jpg",
+        "sizeKB":  1292.8
+    },
+    {
+        "id":  15,
+        "serial":  "16",
+        "fullName":  "נעמה ומנחם גרנית",
+        "fileName":  "גרנית נעמה ומנחם.jpg",
+        "relativeUrl":  "images/גרנית נעמה ומנחם.jpg",
+        "sizeKB":  958.8
+    },
+    {
+        "id":  16,
+        "serial":  "17",
+        "fullName":  "רוחי ודני דינר",
+        "fileName":  "דינר רוחי ודני.jpg",
+        "relativeUrl":  "images/דינר רוחי ודני.jpg",
+        "sizeKB":  1321.2
+    },
+    {
+        "id":  17,
+        "serial":  "18",
+        "fullName":  "ולדימיר ורעיה הוכשטיין",
+        "fileName":  "הוכשטיין ולדימיר ורעיה.jpg",
+        "relativeUrl":  "images/הוכשטיין ולדימיר ורעיה.jpg",
+        "sizeKB":  1361.6
+    },
+    {
+        "id":  18,
+        "serial":  "19",
+        "fullName":  "רותי וקובי הורוביץ",
+        "fileName":  "הורוביץ קובי ורותי.jpg",
+        "relativeUrl":  "images/הורוביץ קובי ורותי.jpg",
+        "sizeKB":  1477
+    },
+    {
+        "id":  19,
+        "serial":  "20",
+        "fullName":  "שרהלה ז\u0027\u0027ל וישראל הראל",
+        "fileName":  "הראל שרהלה ז\u0027\u0027ל וישראל.jpg",
+        "relativeUrl":  "images/הראל שרהלה ז\u0027\u0027ל וישראל.jpg",
+        "sizeKB":  1150.9
+    },
+    {
+        "id":  20,
+        "serial":  "21",
+        "fullName":  "חיה ויוסי ויינר",
+        "fileName":  "ויינר חיה ויוסי.jpg",
+        "relativeUrl":  "images/ויינר חיה ויוסי.jpg",
+        "sizeKB":  1123.2
+    },
+    {
+        "id":  21,
+        "serial":  "22",
+        "fullName":  "פנחס ואסתרקה ולרשטיין",
+        "fileName":  "ולרשטיין פנחס ואסתר.jpg",
+        "relativeUrl":  "images/ולרשטיין פנחס ואסתר.jpg",
+        "sizeKB":  1111
+    },
+    {
+        "id":  22,
+        "serial":  "23",
+        "fullName":  "אהרן ועדנה חלמיש",
+        "fileName":  "חלמיש עדנה ואהרן .jpg",
+        "relativeUrl":  "images/חלמיש עדנה ואהרן .jpg",
+        "sizeKB":  1347.1
+    },
+    {
+        "id":  23,
+        "serial":  "24",
+        "fullName":  "מרים ואליהו טוויטו",
+        "fileName":  "טוויטו מרים ואליהו.jpg",
+        "relativeUrl":  "images/טוויטו מרים ואליהו.jpg",
+        "sizeKB":  1238.6
+    },
+    {
+        "id":  24,
+        "serial":  "25",
+        "fullName":  "מירי והלל טיירי",
+        "fileName":  "טיירי מירי והלל.jpg",
+        "relativeUrl":  "images/טיירי מירי והלל.jpg",
+        "sizeKB":  790
+    },
+    {
+        "id":  25,
+        "serial":  "26",
+        "fullName":  "שמחה ונעמי יגל",
+        "fileName":  "יגל שמחה ונעמי.jpg",
+        "relativeUrl":  "images/יגל שמחה ונעמי.jpg",
+        "sizeKB":  1563.9
+    },
+    {
+        "id":  26,
+        "serial":  "27",
+        "fullName":  "מרים כ\u0027\u0027ץ",
+        "fileName":  "כ\u0027\u0027ץ מרים  ז\u0027\u0027ל.jpg",
+        "relativeUrl":  "images/כ\u0027\u0027ץ מרים  ז\u0027\u0027ל.jpg",
+        "sizeKB":  1293.1
+    },
+    {
+        "id":  27,
+        "serial":  "28",
+        "fullName":  "רבקה כהן",
+        "fileName":  "כהן רבקה.jpg",
+        "relativeUrl":  "images/כהן רבקה.jpg",
+        "sizeKB":  1310.4
+    },
+    {
+        "id":  28,
+        "serial":  "29",
+        "fullName":  "מיכל ומאיר כהנא",
+        "fileName":  "כהנא מיכל ומאיר.jpg",
+        "relativeUrl":  "images/כהנא מיכל ומאיר.jpg",
+        "sizeKB":  1614.3
+    },
+    {
+        "id":  29,
+        "serial":  "30",
+        "fullName":  "אסתר ז\"ל כנרתי",
+        "fileName":  "כנרתי אסתר ז\u0027\u0027ל.jpg",
+        "relativeUrl":  "images/כנרתי אסתר ז\u0027\u0027ל.jpg",
+        "sizeKB":  957.6
+    },
+    {
+        "id":  30,
+        "serial":  "31",
+        "fullName":  "רחל ונעמן לוריא",
+        "fileName":  "לוריא רחל ונעמן.jpg",
+        "relativeUrl":  "images/לוריא רחל ונעמן.jpg",
+        "sizeKB":  1156
+    },
+    {
+        "id":  31,
+        "serial":  "32",
+        "fullName":  "איצ\u0027ה ומלכה מאיר",
+        "fileName":  "מאיר מלכה ואיצ\u0027ה.jpg",
+        "relativeUrl":  "images/מאיר מלכה ואיצ\u0027ה.jpg",
+        "sizeKB":  1226.9
+    },
+    {
+        "id":  32,
+        "serial":  "33",
+        "fullName":  "שרה ז\"ל מיכאלי",
+        "fileName":  "מיכאלי שרה ז\u0027\u0027ל.jpg",
+        "relativeUrl":  "images/מיכאלי שרה ז\u0027\u0027ל.jpg",
+        "sizeKB":  1585.7
+    },
+    {
+        "id":  33,
+        "serial":  "34",
+        "fullName":  "נתי וענת מלחי",
+        "fileName":  "מלחי ענת ונתי.jpg",
+        "relativeUrl":  "images/מלחי ענת ונתי.jpg",
+        "sizeKB":  1320.5
+    },
+    {
+        "id":  34,
+        "serial":  "35",
+        "fullName":  "ניסים וחנהלה מלכי",
+        "fileName":  "מלכי ניסים וחנהלה.jpg",
+        "relativeUrl":  "images/מלכי ניסים וחנהלה.jpg",
+        "sizeKB":  1538.8
+    },
+    {
+        "id":  35,
+        "serial":  "36",
+        "fullName":  "יוסקה וחנה מנור",
+        "fileName":  "מנור יוסקה וחנה.jpg",
+        "relativeUrl":  "images/מנור יוסקה וחנה.jpg",
+        "sizeKB":  977.2
+    },
+    {
+        "id":  36,
+        "serial":  "37",
+        "fullName":  "גדעון מנשה",
+        "fileName":  "מנשה גדעון ולאה.jpg",
+        "relativeUrl":  "images/מנשה גדעון ולאה.jpg",
+        "sizeKB":  1202.7
+    },
+    {
+        "id":  37,
+        "serial":  "38",
+        "fullName":  "רותי מנשה",
+        "fileName":  "מנשה רותי.jpg",
+        "relativeUrl":  "images/מנשה רותי.jpg",
+        "sizeKB":  925.2
+    },
+    {
+        "id":  38,
+        "serial":  "39",
+        "fullName":  "נתן ומרים נגל",
+        "fileName":  "נגל מרים ונתן.jpg",
+        "relativeUrl":  "images/נגל מרים ונתן.jpg",
+        "sizeKB":  1473.2
+    },
+    {
+        "id":  39,
+        "serial":  "40",
+        "fullName":  "רותי ואריה נוי",
+        "fileName":  "נוי אריה ורותי.jpg",
+        "relativeUrl":  "images/נוי אריה ורותי.jpg",
+        "sizeKB":  1256.4
+    },
+    {
+        "id":  40,
+        "serial":  "42",
+        "fullName":  "מנוחה ומשה ז\"ל נתן",
+        "fileName":  "נתן מנוחה ומשה ז\u0027\u0027ל.jpg",
+        "relativeUrl":  "images/נתן מנוחה ומשה ז\u0027\u0027ל.jpg",
+        "sizeKB":  1101
+    },
+    {
+        "id":  41,
+        "serial":  "43",
+        "fullName":  "עדנה ומאיר סימן טוב",
+        "fileName":  "סימן טוב מאיר ועדנה.jpg",
+        "relativeUrl":  "images/סימן טוב מאיר ועדנה.jpg",
+        "sizeKB":  1183.2
+    },
+    {
+        "id":  42,
+        "serial":  "44",
+        "fullName":  "יהודה וחיה עציון",
+        "fileName":  "עציון חיה ויהודה.jpg",
+        "relativeUrl":  "images/עציון חיה ויהודה.jpg",
+        "sizeKB":  1137.5
+    },
+    {
+        "id":  43,
+        "serial":  "45",
+        "fullName":  "שלמאי ויפה פוזס",
+        "fileName":  "פוזס יפה ושלמאי.jpg",
+        "relativeUrl":  "images/פוזס יפה ושלמאי.jpg",
+        "sizeKB":  1429.9
+    },
+    {
+        "id":  44,
+        "serial":  "46",
+        "fullName":  "מויש וכוכבה פומרנץ",
+        "fileName":  "פומרנץ מויש וכוכבה.jpg",
+        "relativeUrl":  "images/פומרנץ מויש וכוכבה.jpg",
+        "sizeKB":  1206
+    },
+    {
+        "id":  45,
+        "serial":  "47",
+        "fullName":  "רות ודוד פסדר",
+        "fileName":  "פסדר.jpg",
+        "relativeUrl":  "images/פסדר.jpg",
+        "sizeKB":  999.7
+    },
+    {
+        "id":  46,
+        "serial":  "48",
+        "fullName":  "עמוס ואילה פרומקין",
+        "fileName":  "פרומקין אילה ועמוס .jpg",
+        "relativeUrl":  "images/פרומקין אילה ועמוס .jpg",
+        "sizeKB":  1329.5
+    },
+    {
+        "id":  47,
+        "serial":  "49",
+        "fullName":  "רחל ויקי פריד",
+        "fileName":  "פריד יקי ורחל.jpg",
+        "relativeUrl":  "images/פריד יקי ורחל.jpg",
+        "sizeKB":  1108
+    },
+    {
+        "id":  48,
+        "serial":  "50",
+        "fullName":  "עפרה ורוני פרידמן",
+        "fileName":  "פרידמן רוני ועפרה.jpg",
+        "relativeUrl":  "images/פרידמן רוני ועפרה.jpg",
+        "sizeKB":  1478.2
+    },
+    {
+        "id":  49,
+        "serial":  "51",
+        "fullName":  "שרה ודני פרלמן",
+        "fileName":  "פרלמן שרה ודני.jpg",
+        "relativeUrl":  "images/פרלמן שרה ודני.jpg",
+        "sizeKB":  1103
+    },
+    {
+        "id":  50,
+        "serial":  "52",
+        "fullName":  "דויד ואילה קאפח",
+        "fileName":  "קאפח דוד ואילה.jpg",
+        "relativeUrl":  "images/קאפח דוד ואילה.jpg",
+        "sizeKB":  1167.5
+    },
+    {
+        "id":  51,
+        "serial":  "53",
+        "fullName":  "רפי ורבקה קדמון",
+        "fileName":  "קדמון רפי ורבקה.jpg",
+        "relativeUrl":  "images/קדמון רפי ורבקה.jpg",
+        "sizeKB":  1128
+    },
+    {
+        "id":  52,
+        "serial":  "54",
+        "fullName":  "משה ורוחי רבי",
+        "fileName":  "רבי רוחי ומשה.jpg",
+        "relativeUrl":  "images/רבי רוחי ומשה.jpg",
+        "sizeKB":  1276.6
+    },
+    {
+        "id":  53,
+        "serial":  "55",
+        "fullName":  "ורדה וחיים רוזן",
+        "fileName":  "רוזן ורדה וחיים.jpg",
+        "relativeUrl":  "images/רוזן ורדה וחיים.jpg",
+        "sizeKB":  1390.1
+    },
+    {
+        "id":  54,
+        "serial":  "56",
+        "fullName":  "חיה ויוסי רונד",
+        "fileName":  "רונד יוסי וחיה.jpg",
+        "relativeUrl":  "images/רונד יוסי וחיה.jpg",
+        "sizeKB":  1083.2
+    },
+    {
+        "id":  55,
+        "serial":  "57",
+        "fullName":  "ברטה ודוד ריננברג",
+        "fileName":  "ריננברג ברטה ודוד.jpg",
+        "relativeUrl":  "images/ריננברג ברטה ודוד.jpg",
+        "sizeKB":  866.5
+    },
+    {
+        "id":  56,
+        "serial":  "58",
+        "fullName":  "יורם ואילה רסיסטל",
+        "fileName":  "רסיסטל אילה ויורם.jpg",
+        "relativeUrl":  "images/רסיסטל אילה ויורם.jpg",
+        "sizeKB":  1382.8
+    },
+    {
+        "id":  57,
+        "serial":  "59",
+        "fullName":  "צילה וצבי שוורץ",
+        "fileName":  "שוורץ צילה וצבי.jpg",
+        "relativeUrl":  "images/שוורץ צילה וצבי.jpg",
+        "sizeKB":  1739.6
+    },
+    {
+        "id":  58,
+        "serial":  "60",
+        "fullName":  "ציפי ז\"ל ואלי שיוביץ",
+        "fileName":  "שיוביץ ציפי ז\u0027\u0027ל ואלי.jpg",
+        "relativeUrl":  "images/שיוביץ ציפי ז\u0027\u0027ל ואלי.jpg",
+        "sizeKB":  1261
+    },
+    {
+        "id":  59,
+        "serial":  "61",
+        "fullName":  "חיים וגאולה שלם",
+        "fileName":  "שלם חיים וגאולה.jpg",
+        "relativeUrl":  "images/שלם חיים וגאולה.jpg",
+        "sizeKB":  1174.7
+    },
+    {
+        "id":  60,
+        "serial":  "62",
+        "fullName":  "יפה ופסח שלניץ",
+        "fileName":  "שלניץ יפה ופסח.jpg",
+        "relativeUrl":  "images/שלניץ יפה ופסח.jpg",
+        "sizeKB":  1346.1
+    },
+    {
+        "id":  61,
+        "serial":  "63",
+        "fullName":  "ורדה ועזריאל שמחוני",
+        "fileName":  "שמחוני ורדה ועזריאל.jpg",
+        "relativeUrl":  "images/שמחוני ורדה ועזריאל.jpg",
+        "sizeKB":  1383.4
+    },
+    {
+        "id":  62,
+        "serial":  "64",
+        "fullName":  "שרה ויוסף שפיץ",
+        "fileName":  "שפיץ יוסף ושרה.jpg",
+        "relativeUrl":  "images/שפיץ יוסף ושרה.jpg",
+        "sizeKB":  1154.8
+    },
+    {
+        "id":  63,
+        "serial":  "65",
+        "fullName":  "יעקב ורחל שפירא",
+        "fileName":  "שפירא יעקב ורחל.jpg",
+        "relativeUrl":  "images/שפירא יעקב ורחל.jpg",
+        "sizeKB":  1008.5
+    },
+    {
+        "id":  64,
+        "serial":  "66",
+        "fullName":  "רבקה שפירא",
+        "fileName":  "שפירא רבקה ז\u0027\u0027ל.jpg",
+        "relativeUrl":  "images/שפירא רבקה ז\u0027\u0027ל.jpg",
+        "sizeKB":  1039.1
+    },
+    {
+        "id":  65,
+        "serial":  "67",
+        "fullName":  "בלהה ויצחק ז\"ל ששר",
+        "fileName":  "ששר בלהה ויצחק.jpg",
+        "relativeUrl":  "images/ששר בלהה ויצחק.jpg",
+        "sizeKB":  1270.5
+    },
+    {
+        "id":  66,
+        "serial":  "68",
+        "fullName":  "ודן ומלכה תור",
+        "fileName":  " תור מלכה ודן.jpg",
+        "relativeUrl":  "images/ תור מלכה ודן.jpg",
+        "sizeKB":  924.7
+    },
+    {
+        "id":  67,
+        "serial":  "69",
+        "fullName":  "שלמה ז\"ל ומרים תנעמי",
+        "fileName":  "תנעמי שלמה ז\u0027ל ומרים.jpg",
+        "relativeUrl":  "images/תנעמי שלמה ז\u0027ל ומרים.jpg",
+        "sizeKB":  1107.9
+    },
+    {
+        "id":  68,
+        "serial":  "68",
+        "fullName":  "מזל ואהוד נאומבורג",
+        "fileName":  "נאומבורג מזל ואהוד.jpg",
+        "relativeUrl":  "images/נאומבורג מזל ואהוד.jpg",
+        "sizeKB":  1032.1
+    }
+]

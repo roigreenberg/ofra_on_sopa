@@ -1,0 +1,3167 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>עפרה על הספה | פרויקט התיעוד הקהילתי</title>
+  <meta name="description" content="עפרה על הספה - סיפורי המייסדים, המשפחות והשנים הראשונות ביישוב עפרה. אוצר זכרונות: ברוך גרינברג.">
+  
+  <!-- Google Fonts: Rubik & Assistant for maximum Hebrew legibility -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  
+  <!-- PapaParse CDN for live Google Sheets CSV loading -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+  <style>
+    /* CSS Styles */
+    :root {
+      --font-scale: 1;
+      --font-family: 'Rubik', 'Assistant', system-ui, -apple-system, sans-serif;
+      
+      /* Color Palette: Warm, prestigious community heritage */
+      --bg-page: #fbf9f5;
+      --bg-subtle: #f4ede2;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #ffffff;
+      
+      --color-primary: #1b385c;
+      --color-primary-hover: #122842;
+      --color-primary-light: #2b5278;
+      --color-primary-soft: #edf4fa;
+      
+      --color-founder-gold: #b45309;
+      --color-founder-dark: #853706;
+      --color-founder-bg: #fffbeb;
+      --color-founder-border: #fcd34d;
+      --color-founder-badge-shadow: rgba(217, 119, 6, 0.2);
+      
+      --color-text-main: #19212d;
+      --color-text-secondary: #4a5568;
+      --color-text-muted: #6b7280;
+      
+      --color-border: #e4dcd0;
+      --color-border-subtle: #ede7de;
+      --color-border-focus: #1b385c;
+      
+      --color-facebook: #1877f2;
+      --color-facebook-hover: #1464cc;
+      --color-facebook-bg: #eff6ff;
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-card: 0 3px 10px rgba(27, 56, 92, 0.06), 0 1px 3px rgba(0,0,0,0.04);
+      --shadow-card-hover: 0 14px 28px rgba(27, 56, 92, 0.12), 0 6px 12px rgba(0,0,0,0.05);
+      --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      
+      --transition-fast: 0.18s ease;
+      --transition-normal: 0.28s ease;
+      --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* High Contrast Accessibility Mode */
+    body.high-contrast {
+      --bg-page: #ffffff;
+      --bg-subtle: #f0f0f0;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #ffffff;
+      --color-primary: #000000;
+      --color-primary-hover: #222222;
+      --color-primary-light: #111111;
+      --color-primary-soft: #f4f4f4;
+      --color-text-main: #000000;
+      --color-text-secondary: #111111;
+      --color-text-muted: #333333;
+      --color-border: #000000;
+      --color-border-subtle: #444444;
+      --color-border-focus: #000000;
+      --color-founder-gold: #000000;
+      --color-founder-dark: #000000;
+      --color-founder-bg: #fffae0;
+      --color-founder-border: #000000;
+      --shadow-card: 0 0 0 2px #000000;
+      --shadow-card-hover: 0 0 0 3px #000000, 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Reset & Base Setup */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: calc(16px * var(--font-scale));
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-page);
+      color: var(--color-text-main);
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Accessibility Focus Visible */
+    :focus-visible {
+      outline: 3px solid var(--color-border-focus);
+      outline-offset: 3px;
+    }
+
+    /* Top Live Announcement Bar */
+    .top-sync-bar {
+      background: var(--color-primary);
+      color: #ffffff;
+      padding: 6px 16px;
+      font-size: 0.88rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sync-status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #10b981;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: pulse-ring 2s infinite;
+    }
+
+    .pulse-dot.offline {
+      background-color: #f59e0b;
+      animation: none;
+    }
+
+    .pulse-dot.loading {
+      background-color: #60a5fa;
+      animation: pulse-ring 1s infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      }
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
+      }
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
+    }
+
+    .top-sync-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-refresh-data {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: var(--radius-full);
+      padding: 4px 12px;
+      font-size: 0.82rem;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--transition-fast);
+    }
+
+    .btn-refresh-data:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .btn-refresh-data svg {
+      transition: transform 0.5s ease;
+    }
+
+    .btn-refresh-data.spinning svg {
+      animation: spin 1s infinite linear;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    /* Accessibility Controls inside Header */
+    .a11y-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .a11y-label {
+      font-size: 0.84rem;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+
+    .font-size-group {
+      display: inline-flex;
+      background: var(--bg-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .btn-font-size {
+      background: transparent;
+      border: none;
+      font-family: inherit;
+      font-weight: 600;
+      color: var(--color-text-main);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-size: 0.9rem;
+      min-width: 34px;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .btn-font-size.active {
+      background: var(--color-primary);
+      color: #ffffff;
+    }
+
+    .btn-contrast-toggle {
+      background: var(--bg-subtle);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-contrast-toggle:hover {
+      background: var(--bg-surface);
+      border-color: var(--color-primary);
+    }
+
+    /* Main Branding Header */
+    .site-header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--color-border-subtle);
+      padding: 20px 24px;
+      position: relative;
+    }
+
+    .header-container {
+      max-width: 1340px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-icon-wrapper {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(27, 56, 92, 0.2);
+      flex-shrink: 0;
+    }
+
+    .brand-titles h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .brand-titles .subtitle {
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+      margin-top: 3px;
+    }
+
+    .brand-titles .curator-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: var(--color-founder-dark);
+      background: var(--color-founder-bg);
+      border: 1px solid var(--color-founder-border);
+      padding: 1px 8px;
+      border-radius: var(--radius-full);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* Sticky Search & Navigation Bar */
+    .sticky-controls-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(251, 249, 245, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      padding: 16px 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .controls-container {
+      max-width: 1340px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    /* Search Bar with Autocomplete Dropdown */
+    .search-row {
+      display: flex;
+      gap: 12px;
+      position: relative;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-muted);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 54px;
+      padding: 0 54px 0 54px;
+      font-family: inherit;
+      font-size: 1.12rem;
+      color: var(--color-text-main);
+      background: var(--bg-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-fast);
+    }
+
+    .search-input:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px var(--color-primary-soft);
+      outline: none;
+    }
+
+    .btn-clear-search {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--bg-subtle);
+      border: none;
+      color: var(--color-text-secondary);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-clear-search:hover {
+      background: var(--color-border);
+      color: var(--color-text-main);
+    }
+
+    .btn-clear-search.visible {
+      display: flex;
+    }
+
+    /* Autocomplete Dropdown */
+    .autocomplete-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      left: 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      max-height: 420px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+    }
+
+    .autocomplete-dropdown.open {
+      display: block;
+      animation: dropdown-fade-in 0.2s ease;
+    }
+
+    @keyframes dropdown-fade-in {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .autocomplete-item {
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--color-border-subtle);
+      transition: background var(--transition-fast);
+    }
+
+    .autocomplete-item:last-child {
+      border-bottom: none;
+    }
+
+    .autocomplete-item:hover,
+    .autocomplete-item.selected {
+      background: var(--color-primary-soft);
+    }
+
+    .ac-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ac-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--bg-subtle);
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+    }
+
+    .ac-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ac-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--color-text-main);
+    }
+
+    .ac-name mark {
+      background-color: #fef08a;
+      color: #854d0e;
+      padding: 0 2px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    .ac-badges {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Filter Row */
+    .filter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .filter-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .filter-chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 42px;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+
+    .filter-chip:hover {
+      background: var(--bg-subtle);
+      color: var(--color-text-main);
+      border-color: var(--color-primary-light);
+    }
+
+    .filter-chip.active {
+      background: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary);
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(27, 56, 92, 0.25);
+    }
+
+    .filter-chip .chip-count {
+      background: rgba(0, 0, 0, 0.08);
+      padding: 1px 7px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .filter-chip.active .chip-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .filter-chip-founder {
+      border-color: var(--color-founder-border);
+      background: var(--color-founder-bg);
+      color: var(--color-founder-dark);
+    }
+
+    .filter-chip-founder:hover {
+      background: #fde68a;
+    }
+
+    .filter-chip-founder.active {
+      background: var(--color-founder-gold);
+      color: #ffffff;
+      border-color: var(--color-founder-gold);
+    }
+
+    .selects-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .custom-select {
+      height: 42px;
+      background: var(--bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      padding: 0 16px 0 32px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: var(--color-text-main);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: left 12px center;
+      background-size: 14px;
+      transition: border-color var(--transition-fast);
+    }
+
+    .custom-select:focus {
+      border-color: var(--color-primary);
+      outline: none;
+    }
+
+    /* Results Header Bar */
+    .results-banner {
+      max-width: 1340px;
+      margin: 18px auto 6px auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .results-count-text {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-reset-filters {
+      background: transparent;
+      border: 1px dashed var(--color-border);
+      color: var(--color-text-secondary);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 4px;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-reset-filters:hover {
+      background: var(--bg-subtle);
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+
+    .btn-reset-filters.visible {
+      display: inline-flex;
+    }
+
+    /* Main Container & Cards Grid */
+    .main-content {
+      flex: 1;
+      max-width: 1340px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 24px 60px 24px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 26px;
+    }
+
+    /* Family Card */
+    .family-card {
+      background: var(--bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      position: relative;
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+      user-select: none;
+    }
+
+    .family-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: var(--color-border);
+    }
+
+    .family-card:focus-visible {
+      outline: 3px solid var(--color-primary);
+      transform: translateY(-4px);
+    }
+
+    .card-main-area {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    /* Horizontal Card: Photo on Top */
+    .family-card:not(.card-vertical) .card-visual-wrapper {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      background: #0f172a;
+      overflow: hidden;
+    }
+
+    .family-card:not(.card-vertical) .card-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform var(--transition-smooth);
+    }
+
+    /* Vertical Card: Photo on the Right, Content on the Left */
+    .family-card.card-vertical .card-main-area {
+      display: flex;
+      flex-direction: row; /* In RTL: right is visual, left is body */
+      flex: 1;
+      min-height: 240px;
+    }
+
+    .family-card.card-vertical .card-visual-wrapper {
+      position: relative;
+      width: 45%;
+      min-width: 135px;
+      max-width: 180px;
+      min-height: 240px;
+      background: #0f172a;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .family-card.card-vertical .card-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform var(--transition-smooth);
+    }
+
+    .family-card.card-vertical .card-body {
+      flex: 1;
+      padding: 16px 14px;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .family-card.card-vertical .card-name {
+      font-size: 1.25rem;
+      line-height: 1.25;
+    }
+
+    .family-card.card-vertical .card-excerpt {
+      -webkit-line-clamp: 3;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .card-badges-inline {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .family-card:hover .card-photo {
+      transform: scale(1.04);
+    }
+
+    /* Card Visual Placeholder */
+    .card-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #fdfcf9 0%, #f4ede1 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .card-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px dashed rgba(180, 83, 9, 0.25);
+      border-radius: var(--radius-md);
+      pointer-events: none;
+    }
+
+    .placeholder-sofa-bg {
+      position: absolute;
+      opacity: 0.08;
+      width: 160px;
+      height: 160px;
+      color: var(--color-primary);
+      pointer-events: none;
+    }
+
+    .placeholder-monogram {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(27, 56, 92, 0.2);
+      margin-bottom: 10px;
+      z-index: 1;
+    }
+
+    .placeholder-caption {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      z-index: 1;
+    }
+
+    .placeholder-project-tag {
+      font-size: 0.76rem;
+      color: var(--color-founder-gold);
+      font-weight: 700;
+      margin-top: 2px;
+      z-index: 1;
+      letter-spacing: 0.02em;
+    }
+
+    /* Card Badges Layer */
+    .card-badges-top {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      left: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Badges */
+    .badge-founder {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      color: var(--color-founder-dark);
+      border: 1px solid var(--color-founder-border);
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 3px 8px var(--color-founder-badge-shadow);
+      letter-spacing: 0.01em;
+      pointer-events: auto;
+    }
+
+    .badge-founder svg {
+      color: #d97706;
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    .badge-year {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(4px);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      pointer-events: auto;
+    }
+
+    .badge-year svg {
+      width: 13px;
+      height: 13px;
+      color: var(--color-primary-light);
+    }
+
+    /* Card Content */
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 12px;
+    }
+
+    .card-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .card-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+    }
+
+    .card-excerpt {
+      font-size: 0.98rem;
+      color: var(--color-text-secondary);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .card-excerpt.empty {
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+
+    /* Card Footer Action */
+    .card-footer {
+      padding: 12px 18px;
+      border-top: 1px solid var(--color-border-subtle);
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: var(--bg-surface);
+    }
+
+    .btn-card-action {
+      background: var(--color-primary-soft);
+      color: var(--color-primary);
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius-full);
+      font-family: inherit;
+      font-size: 0.96rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      transition: all var(--transition-fast);
+      flex: 1;
+      justify-content: center;
+    }
+
+    .family-card:hover .btn-card-action {
+      background: var(--color-primary);
+      color: #ffffff;
+    }
+
+    .card-fb-icon-link {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--color-facebook-bg);
+      color: var(--color-facebook);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      flex-shrink: 0;
+      border: 1px solid rgba(24, 119, 242, 0.15);
+    }
+
+    .card-fb-icon-link:hover {
+      background: var(--color-facebook);
+      color: #ffffff;
+      transform: scale(1.08);
+    }
+
+    /* Empty State */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--bg-surface);
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-xl);
+      margin: 20px 0;
+    }
+
+    .empty-state-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 18px auto;
+      color: var(--color-founder-gold);
+      background: var(--color-founder-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-state h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+
+    .empty-state p {
+      font-size: 1.05rem;
+      color: var(--color-text-secondary);
+      max-width: 500px;
+      margin: 0 auto 20px auto;
+    }
+
+    /* Detail Modal Popup */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      box-sizing: border-box;
+      max-width: 100%;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-dialog {
+      background: var(--bg-surface-elevated);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-modal);
+      max-width: 1040px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      animation: modal-zoom-in var(--transition-smooth);
+      border: 1px solid var(--color-border-subtle);
+      box-sizing: border-box;
+      min-width: 0;
+    }
+
+    @keyframes modal-zoom-in {
+      from {
+        opacity: 0;
+        transform: scale(0.94) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* Modal Header */
+    .modal-header {
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--color-border-subtle);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--bg-surface);
+    }
+
+    .modal-title-group h2 {
+      font-size: 1.95rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1.15;
+    }
+
+    .modal-badges-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn-modal-close {
+      background: var(--bg-subtle);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
+      border-radius: var(--radius-full);
+      padding: 8px 18px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      flex-shrink: 0;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-modal-close:hover {
+      background: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary);
+    }
+
+    /* Modal Scrollable Body */
+    .modal-body {
+      padding: 28px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 32px;
+      align-items: start;
+      box-sizing: border-box;
+      min-width: 0;
+      width: 100%;
+    }
+
+    /* Modal Visual Column */
+    .modal-visual-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .modal-image-wrapper {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--color-border-subtle);
+      background: #f8fafc;
+      position: relative;
+      display: block;
+    }
+
+    .modal-photo {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: zoom-in;
+      border-radius: var(--radius-lg);
+    }
+
+    /* Modal Layout when there is NO story: centered */
+    .modal-body.no-story {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 24px;
+      gap: 20px;
+    }
+
+    .modal-body.no-story .modal-story-col {
+      display: none !important;
+    }
+
+    .modal-body.no-story .modal-visual-col {
+      width: 100%;
+      max-width: 440px;
+      position: static;
+      margin: 0 auto;
+    }
+
+    .modal-body.no-story .modal-photo {
+      width: 100%;
+      height: auto;
+    }
+
+    .modal-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #fdfcf9 0%, #f4ede1 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px dashed rgba(180, 83, 9, 0.3);
+      border-radius: var(--radius-md);
+      pointer-events: none;
+    }
+
+    .modal-info-box {
+      background: var(--bg-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      border: 1px solid var(--color-border-subtle);
+    }
+
+    .modal-info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      font-size: 0.95rem;
+    }
+
+    .modal-info-row:last-child {
+      border-bottom: none;
+    }
+
+    .modal-info-label {
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+
+    .modal-info-val {
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    /* Facebook CTA Button in Modal */
+    .btn-modal-facebook {
+      background: var(--color-facebook);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
+      transition: all var(--transition-fast);
+      min-height: 52px;
+    }
+
+    .btn-modal-facebook:hover {
+      background: var(--color-facebook-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(24, 119, 242, 0.35);
+    }
+
+    /* Modal Story Column */
+    .modal-story-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-story-header {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      border-bottom: 2px solid var(--color-primary-soft);
+      padding-bottom: 8px;
+    }
+
+    .modal-story-text {
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: var(--color-text-main);
+      white-space: normal;
+    }
+
+    .story-paragraph {
+      margin-bottom: 1.15em;
+      text-align: justify;
+    }
+
+    .story-divider-ornament {
+      text-align: center;
+      margin: 1.6em 0;
+      color: var(--color-founder-gold);
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .story-divider-ornament::before,
+    .story-divider-ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .story-signature-box {
+      margin-top: 24px;
+      padding: 16px 20px;
+      background: var(--color-founder-bg);
+      border-right: 4px solid var(--color-founder-gold);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-founder-dark);
+    }
+
+    .story-empty-notice {
+      padding: 30px;
+      background: var(--bg-subtle);
+      border-radius: var(--radius-lg);
+      border: 1px dashed var(--color-border);
+      text-align: center;
+    }
+
+    .story-empty-notice h3 {
+      font-size: 1.25rem;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+
+    .story-empty-notice p {
+      color: var(--color-text-secondary);
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+
+    /* Modal Navigation Footer */
+    .modal-footer {
+      padding: 16px 28px;
+      border-top: 1px solid var(--color-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--bg-surface);
+    }
+
+    .btn-nav-modal {
+      background: var(--bg-subtle);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-main);
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 46px;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-nav-modal:hover:not(:disabled) {
+      background: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary);
+    }
+
+    .btn-nav-modal:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .modal-counter-indicator {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+    }
+
+    /* Fullscreen Photo Lightbox */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      cursor: zoom-out;
+    }
+
+    .lightbox-modal.open {
+      display: flex;
+    }
+
+    .lightbox-image {
+      max-width: 94vw;
+      max-height: 92vh;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    }
+
+    .btn-close-lightbox {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: #ffffff;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-fast);
+    }
+
+    .btn-close-lightbox:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #152233;
+      color: #cbd5e1;
+      padding: 40px 24px 30px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: auto;
+    }
+
+    .footer-container {
+      max-width: 1340px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-brand h3 {
+      color: #ffffff;
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .footer-brand p {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .footer-curator {
+      color: #fde68a;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.88rem;
+      color: #94a3b8;
+    }
+
+    .btn-scroll-top {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-full);
+      padding: 8px 18px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--transition-fast);
+    }
+
+    .btn-scroll-top:hover {
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    /* Toast Notification */
+    .toast-notification {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--color-primary);
+      color: #ffffff;
+      padding: 14px 24px;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 3000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .toast-notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive Media Queries */
+    @media (max-width: 900px) {
+      .modal-body {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .modal-visual-col {
+        position: static;
+        max-width: 480px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .modal-dialog {
+        max-height: 94vh;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sticky-controls-wrapper {
+        padding: 10px 14px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .controls-container {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+
+      .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+        box-sizing: border-box;
+      }
+
+      .filter-chips {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 6px;
+        scrollbar-width: none;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+
+      .filter-chips::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filter-chip {
+        flex-shrink: 0;
+        white-space: nowrap;
+        font-size: 0.88rem;
+        padding: 6px 14px;
+        min-height: 40px;
+      }
+
+      .selects-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .custom-select {
+        width: 100%;
+        font-size: 0.86rem;
+        height: 40px;
+        padding: 0 10px 0 28px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .site-header {
+        padding: 14px 16px;
+      }
+
+      .header-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .brand-group {
+        gap: 12px;
+      }
+
+      .brand-icon-wrapper {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+      }
+
+      .brand-titles h1 {
+        font-size: 1.5rem;
+      }
+
+      .brand-titles .subtitle {
+        font-size: 0.88rem;
+      }
+
+      .a11y-toolbar {
+        justify-content: space-between;
+        width: 100%;
+        padding-top: 10px;
+        border-top: 1px dashed var(--color-border);
+      }
+
+      .search-input {
+        height: 50px;
+        font-size: 1.02rem;
+        padding: 0 48px 0 46px;
+      }
+
+      .search-icon {
+        right: 14px;
+      }
+
+      .main-content {
+        padding: 12px 16px 40px 16px;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .modal-backdrop {
+        padding: 10px;
+        align-items: center;
+      }
+
+      .modal-dialog {
+        max-height: 92vh;
+        border-radius: 20px;
+      }
+
+      .modal-header {
+        padding: 14px 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .modal-title-group {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .modal-title-group h2 {
+        font-size: 1.45rem;
+        line-height: 1.25;
+        word-break: break-word;
+      }
+
+      .btn-modal-close {
+        padding: 6px 12px;
+        min-height: 38px;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+      }
+
+      .modal-badges-container {
+        gap: 6px;
+        margin-top: 6px;
+      }
+
+      .modal-body {
+        padding: 16px;
+        gap: 18px;
+      }
+
+      .btn-modal-facebook {
+        font-size: 0.95rem;
+        min-height: 48px;
+        padding: 10px 16px;
+      }
+
+      .modal-footer {
+        padding: 12px 16px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .btn-nav-modal {
+        width: auto;
+        min-width: 46px;
+        padding: 8px 14px;
+        min-height: 40px;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .btn-nav-modal .nav-text {
+        display: none;
+      }
+
+      .btn-nav-modal .nav-arrow {
+        font-size: 1.25rem;
+        line-height: 1;
+      }
+
+      .modal-counter-indicator {
+        font-size: 0.95rem;
+        white-space: nowrap;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      .top-sync-bar,
+      .sticky-controls-wrapper,
+      .btn-card-action,
+      .card-fb-icon-link,
+      .btn-refresh-data,
+      .a11y-toolbar,
+      .site-footer,
+      .toast-notification {
+        display: none !important;
+      }
+
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+
+      .cards-grid {
+        display: block !important;
+      }
+
+      .family-card {
+        page-break-inside: avoid;
+        margin-bottom: 24px;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Live Sync Bar -->
+  <aside class="top-sync-bar" aria-label="סטטוס נתונים">
+    <div class="sync-status-indicator">
+      <span class="pulse-dot" id="sync-dot"></span>
+      <span id="sync-status-text">טוען נתונים חיים מגיליון Google Sheets...</span>
+    </div>
+    <div class="top-sync-actions">
+      <button type="button" class="btn-refresh-data" id="btn-refresh" title="סנכרון מיידי מהגיליון">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <polyline points="1 20 1 14 7 14"></polyline>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+        </svg>
+        <span>רענן נתונים</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-group">
+        <div class="brand-icon-wrapper" aria-hidden="true">
+          <!-- Armchair / Sofa Icon -->
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"></path>
+            <path d="M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path>
+            <path d="M4 18v2"></path>
+            <path d="M20 18v2"></path>
+            <line x1="8" y1="11" x2="8" y2="15"></line>
+            <line x1="16" y1="11" x2="16" y2="15"></line>
+          </svg>
+        </div>
+        <div class="brand-titles">
+          <h1>עפרה על הספה</h1>
+          <div class="subtitle">פרויקט התיעוד הקהילתי של משפחות ומייסדי היישוב עפרה</div>
+          <div class="curator-badge">אוצר זכרונות ומראיין: ברוך גרינברג</div>
+        </div>
+      </div>
+
+      <!-- Accessibility Toolbar for Older Adults -->
+      <div class="a11y-toolbar" role="region" aria-label="נגישות והתאמת תצוגה">
+        <span class="a11y-label">גודל גופן:</span>
+        <div class="font-size-group" role="group" aria-label="בחירת גודל טקסט">
+          <button type="button" class="btn-font-size active" id="btn-font-normal" data-scale="1" title="גודל רגיל">א</button>
+          <button type="button" class="btn-font-size" id="btn-font-large" data-scale="1.15" title="גודל מוגדל">א+</button>
+          <button type="button" class="btn-font-size" id="btn-font-xlarge" data-scale="1.3" title="גודל ענק לקריאה נוחה">א++</button>
+        </div>
+
+        <button type="button" class="btn-contrast-toggle" id="btn-contrast-toggle" title="החלפת ניגודיות גבוהה">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a10 10 0 0 1 0 20z"></path>
+          </svg>
+          <span>ניגודיות</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky Search & Filter Controls -->
+  <section class="sticky-controls-wrapper" aria-label="חיפוש וסינון משפחות">
+    <div class="controls-container">
+      <!-- Search Box with Live Autocomplete -->
+      <div class="search-row">
+        <div class="search-input-wrapper">
+          <div class="search-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <input 
+            type="text" 
+            id="search-input" 
+            class="search-input" 
+            placeholder="חיפוש לפי שם פרטי, שם משפחה, שנת הגעה או מילה בסיפור..." 
+            autocomplete="off"
+            aria-autocomplete="list"
+            aria-controls="autocomplete-dropdown"
+            aria-expanded="false"
+            aria-label="חיפוש משפחה או שנה"
+          >
+          <button type="button" class="btn-clear-search" id="btn-clear-search" title="נקה חיפוש" aria-label="נקה חיפוש">✕</button>
+
+          <!-- Autocomplete Dropdown List -->
+          <ul class="autocomplete-dropdown" id="autocomplete-dropdown" role="listbox" aria-label="הצעות חיפוש מהירות"></ul>
+        </div>
+      </div>
+
+      <!-- Quick Filter Chips & Dropdowns -->
+      <div class="filter-row">
+        <div class="filter-chips" role="group" aria-label="סינון קטגוריות">
+          <button type="button" class="filter-chip active" data-filter="all" id="chip-all">
+            <span>כל המשפחות</span>
+            <span class="chip-count" id="count-all">0</span>
+          </button>
+          
+          <button type="button" class="filter-chip filter-chip-founder" data-filter="founders" id="chip-founders">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+            </svg>
+            <span>דור המייסדים (1975-76)</span>
+            <span class="chip-count" id="count-founders">0</span>
+          </button>
+
+          <button type="button" class="filter-chip" data-filter="stories" id="chip-stories">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>עם סיפור מתועד</span>
+            <span class="chip-count" id="count-stories">0</span>
+          </button>
+        </div>
+
+        <div class="selects-group">
+          <!-- Year Selector -->
+          <select id="year-select" class="custom-select" aria-label="סינון לפי שנת הגעה">
+            <option value="">כל שנות ההגעה</option>
+          </select>
+
+          <!-- Sort Selector -->
+          <select id="sort-select" class="custom-select" aria-label="מיון רשימה">
+            <option value="name">מיון: שם משפחה (א-ת)</option>
+            <option value="year-asc">מיון: שנת הגעה (מהמוקדם)</option>
+            <option value="year-desc">מיון: שנת הגעה (מהמאוחר)</option>
+            <option value="id">מיון: סדר מקורי בגיליון</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Count & Reset Bar -->
+  <div class="results-banner">
+    <div class="results-count-text" id="results-count" aria-live="polite">טוען משפחות...</div>
+    <button type="button" class="btn-reset-filters" id="btn-reset-filters">
+      <span>✕ אפס סינונים</span>
+    </button>
+  </div>
+
+  <!-- Main Content Cards Grid -->
+  <main class="main-content">
+    <div class="cards-grid" id="cards-grid" role="region" aria-label="כרטיסי משפחות עפרה">
+      <!-- Cards rendered dynamically -->
+    </div>
+  </main>
+
+  <!-- Detail Modal Dialog -->
+  <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-family-name" tabindex="-1">
+    <div class="modal-dialog" id="modal-dialog">
+      <!-- Modal Header -->
+      <header class="modal-header">
+        <div class="modal-title-group">
+          <h2 id="modal-family-name">שם משפחה</h2>
+          <div class="modal-badges-container" id="modal-badges"></div>
+        </div>
+        <button type="button" class="btn-modal-close" id="btn-modal-close" aria-label="סגור חלון">
+          <span>סגור</span>
+          <span aria-hidden="true">✕</span>
+        </button>
+      </header>
+
+      <!-- Modal Body (Two-Column Layout) -->
+      <div class="modal-body" id="modal-body">
+        <!-- Visual Column -->
+        <div class="modal-visual-col">
+          <!-- Image Container (Always full width as the column, height automatic) -->
+          <div class="modal-image-wrapper" id="modal-image-container">
+            <!-- Image or Placeholder rendered here -->
+          </div>
+
+          <!-- Facebook Post Button -->
+          <div id="modal-fb-container"></div>
+        </div>
+
+        <!-- Story Text Column (hidden if no story) -->
+        <div class="modal-story-col" id="modal-story-col">
+          <h3 class="modal-story-header">הסיפור של המשפחה</h3>
+          <div class="modal-story-text" id="modal-story-body"></div>
+        </div>
+      </div>
+
+      <!-- Modal Footer (Previous / Next Navigation) -->
+      <footer class="modal-footer">
+        <button type="button" class="btn-nav-modal" id="btn-modal-prev" aria-label="למשפחה הקודמת">
+          <span class="nav-arrow">⭢</span>
+          <span class="nav-text">המשפחה הקודמת</span>
+        </button>
+
+        <div class="modal-counter-indicator" id="modal-counter">1 מתוך 68</div>
+
+        <button type="button" class="btn-nav-modal" id="btn-modal-next" aria-label="למשפחה הבאה">
+          <span class="nav-text">המשפחה הבאה</span>
+          <span class="nav-arrow">⭠</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Fullscreen Lightbox Modal -->
+  <div class="lightbox-modal" id="lightbox-modal" role="dialog" aria-modal="true" aria-label="תמונה בגודל מלא" tabindex="-1">
+    <button type="button" class="btn-close-lightbox" id="btn-close-lightbox" aria-label="סגור תמונה מוגדלת">✕</button>
+    <img src="" alt="" class="lightbox-image" id="lightbox-image">
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h3>עפרה על הספה</h3>
+          <p>הארכיון הקהילתי הדיגיטלי לשימור סיפורי הראשונים, המשפחות והזיכרונות של היישוב עפרה.</p>
+        </div>
+        <div class="footer-curator">
+          אוצר ומראיין: ברוך גרינברג
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>כל הזכויות שמורות לפרויקט "עפרה על הספה" &bull; היישוב עפרה</div>
+        <button type="button" class="btn-scroll-top" id="btn-scroll-top" title="חזרה למעלה">
+          <span>ראש העמוד ⭡</span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Message -->
+  <div class="toast-notification" id="toast-notification" role="status" aria-live="polite"></div>
+
+  <!-- Embedded Script with Data & Logic -->
+  <script>
+    /* __EMBEDDED_BACKUP_DATA__ */
+
+    /* --- APPLICATION LOGIC --- */
+
+    // Published Google Sheets CSV URL
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQuJKQ6Eh_yLHEUPW6027pzHXvnvVCBVvyYB8kIZMX1bl8y6Ijk9Zg2TlDxxMU0cufFpbt0o1PCEdrJ/pub?output=csv";
+
+    // Application State
+    let allFamilies = (typeof EMBEDDED_BACKUP_DATA !== 'undefined' && Array.isArray(EMBEDDED_BACKUP_DATA)) ? [...EMBEDDED_BACKUP_DATA] : [];
+    let displayedFamilies = [];
+    let currentFilter = 'all'; // 'all', 'founders', 'stories', 'photos'
+    let currentSearchTerm = '';
+    let currentYearFilter = '';
+    let currentSort = 'name';
+    let currentModalIndex = -1;
+    let selectedAutocompleteIndex = -1;
+    let lastActiveCardElement = null;
+
+    // DOM Elements
+    const cardsGrid = document.getElementById('cards-grid');
+    const searchInput = document.getElementById('search-input');
+    const btnClearSearch = document.getElementById('btn-clear-search');
+    const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
+    const resultsCountEl = document.getElementById('results-count');
+    const btnResetFilters = document.getElementById('btn-reset-filters');
+    const yearSelect = document.getElementById('year-select');
+    const sortSelect = document.getElementById('sort-select');
+    const syncDot = document.getElementById('sync-dot');
+    const syncStatusText = document.getElementById('sync-status-text');
+    const btnRefresh = document.getElementById('btn-refresh');
+    const toastEl = document.getElementById('toast-notification');
+
+    // Modal DOM Elements
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalBody = document.getElementById('modal-body');
+    const modalStoryCol = document.getElementById('modal-story-col');
+    const modalFamilyName = document.getElementById('modal-family-name');
+    const modalBadges = document.getElementById('modal-badges');
+    const modalImageContainer = document.getElementById('modal-image-container');
+    const modalFbContainer = document.getElementById('modal-fb-container');
+    const modalStoryBody = document.getElementById('modal-story-body');
+    const modalCounter = document.getElementById('modal-counter');
+    const btnModalClose = document.getElementById('btn-modal-close');
+    const btnModalPrev = document.getElementById('btn-modal-prev');
+    const btnModalNext = document.getElementById('btn-modal-next');
+
+    // Lightbox DOM Elements
+    const lightboxModal = document.getElementById('lightbox-modal');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const btnCloseLightbox = document.getElementById('btn-close-lightbox');
+
+    /* --- FOUNDER DETERMINATION --- */
+    function isFounderYear(yearStr) {
+      if (!yearStr) return false;
+      const s = String(yearStr).trim();
+      if (/1975|1976/.test(s)) return true;
+      if (/תשל["״]?[הו]/i.test(s)) return true;
+      if (/(^|[\/\-\s])(75|76)($|[\/\-\s])/.test(s)) return true;
+      return false;
+    }
+
+    /* --- TOAST NOTIFICATIONS --- */
+    let toastTimeout = null;
+    function showToast(msg) {
+      if (!toastEl) return;
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toastEl.classList.remove('show');
+      }, 3500);
+    }
+
+    /* --- SET SYNC STATUS --- */
+    function setSyncStatus(status, count = null) {
+      if (!syncDot || !syncStatusText) return;
+      syncDot.className = 'pulse-dot ' + status;
+      if (status === 'live') {
+        syncStatusText.textContent = `מעודכן ישירות מגיליון Google Sheets (${count || allFamilies.length} משפחות)`;
+      } else if (status === 'loading') {
+        syncStatusText.textContent = 'מסנכרן נתונים חיים מהגיליון...';
+      } else if (status === 'offline') {
+        syncStatusText.textContent = `פועל במצב שמור (${allFamilies.length} משפחות בארכיון)`;
+      }
+    }
+
+    /* --- CSV ROW PARSING --- */
+    function parseSheetRows(rawRows) {
+      if (!rawRows || !Array.isArray(rawRows) || rawRows.length < 2) return [];
+
+      const headerRow = rawRows[0].map(h => (h || '').toString().trim());
+
+      const findCol = (predicate, fallback) => {
+        const idx = headerRow.findIndex(predicate);
+        return idx !== -1 ? idx : fallback;
+      };
+
+      const idxSerial = findCol(h => /מס["״]?ד|סידורי|id/i.test(h), 0);
+      const idxLast = findCol(h => /שם\s*משפחה|משפחה/i.test(h), 1);
+      const idxFirst = findCol(h => /שם\s*פרטי|פרטי/i.test(h), 2);
+      const idxYear = findCol(h => /שנת\s*הגע[הת]|שנה|year/i.test(h), 5);
+      const idxFb = findCol((h, i) => /פייסבוק|facebook|הערות|notes/i.test(h) || (h === '' && i === 6), 6);
+      const idxImg = findCol(h => /קישור\s*תמונה|תמונה|image|photo/i.test(h), 7);
+      const idxStory = findCol(h => /טקסט\s*פוסט|טקסט|פוסט|caption|סיפור/i.test(h), 8);
+
+      const items = [];
+      let currentId = 1;
+
+      for (let i = 1; i < rawRows.length; i++) {
+        const row = rawRows[i];
+        if (!row || !Array.isArray(row)) continue;
+
+        const firstName = (row[idxFirst] || '').toString().trim();
+        const lastName = (row[idxLast] || '').toString().trim();
+
+        // Skip completely empty rows
+        if (!firstName && !lastName) continue;
+
+        const serial = (row[idxSerial] || '').toString().trim() || String(currentId);
+        const year = (row[idxYear] || '').toString().trim();
+        let imageUrl = (row[idxImg] || '').toString().trim();
+        let fbLink = (row[idxFb] || '').toString().trim();
+        const story = (row[idxStory] || '').toString().trim();
+
+        // Fallback scan for Facebook link in any column
+        if (!fbLink || !fbLink.includes('facebook.com')) {
+          for (let c = 0; c < row.length; c++) {
+            const v = (row[c] || '').toString().trim();
+            if (v.includes('facebook.com') || v.includes('fb.watch')) {
+              fbLink = v;
+              break;
+            }
+          }
+        }
+
+        // If an existing entry in allFamilies has an image path, preserve it
+        let existing = (typeof allFamilies !== 'undefined' && allFamilies.length >= currentId) ? allFamilies[currentId - 1] : null;
+        if (existing && (existing.imageUrl || existing.image)) {
+          imageUrl = existing.imageUrl || existing.image;
+        } else if (!imageUrl || !imageUrl.startsWith('http')) {
+          for (let c = 0; c < row.length; c++) {
+            const v = (row[c] || '').toString().trim();
+            if (v.startsWith('http') && (v.includes('.jpg') || v.includes('.jpeg') || v.includes('.png') || v.includes('fbcdn.net'))) {
+              imageUrl = v;
+              break;
+            }
+          }
+        }
+
+        const isFounder = isFounderYear(year);
+
+        items.push({
+          id: currentId++,
+          serial: serial,
+          firstName: firstName,
+          lastName: lastName,
+          fullName: `${firstName} ${lastName}`.trim(),
+          year: year,
+          isFounder: isFounder,
+          fbLink: fbLink,
+          imageUrl: imageUrl,
+          story: story,
+          hasStory: Boolean(story),
+          hasImage: Boolean(imageUrl)
+        });
+      }
+
+      return items;
+    }
+
+    /* --- LIVE DATA FETCH VIA PAPAPARSE --- */
+    function loadLiveData(manual = false) {
+      if (manual && btnRefresh) {
+        btnRefresh.classList.add('spinning');
+      }
+
+      if (typeof Papa === 'undefined') {
+        console.warn("PapaParse not loaded, using embedded archive data.");
+        setSyncStatus('offline');
+        if (manual) {
+          btnRefresh.classList.remove('spinning');
+          showToast('פועל על נתוני הארכיון השמורים');
+        }
+        return;
+      }
+
+      setSyncStatus('loading');
+      const fetchUrl = SHEET_CSV_URL + (SHEET_CSV_URL.includes('?') ? '&' : '?') + '_cacheBust=' + Date.now();
+
+      Papa.parse(fetchUrl, {
+        download: true,
+        header: false,
+        skipEmptyLines: true,
+        complete: function(results) {
+          if (btnRefresh) btnRefresh.classList.remove('spinning');
+          if (results && results.data && results.data.length > 1) {
+            const parsed = parseSheetRows(results.data);
+            if (parsed.length > 0) {
+              allFamilies = parsed;
+              populateYearSelect();
+              applyFiltersAndRender();
+              setSyncStatus('live', allFamilies.length);
+              if (manual) {
+                showToast(`הנתונים סונכרנו בהצלחה! (${allFamilies.length} משפחות)`);
+              }
+              return;
+            }
+          }
+          setSyncStatus('offline');
+          if (manual) showToast('הסנכרון לא הניב נתונים חדשים; מוצג הארכיון השמור');
+        },
+        error: function(err) {
+          if (btnRefresh) btnRefresh.classList.remove('spinning');
+          console.warn("Could not fetch Google Sheet CSV live:", err);
+          setSyncStatus('offline');
+          if (manual) showToast('שגיאה בחיבור לגיליון החי. מוצגים נתוני הארכיון השמורים');
+        }
+      });
+    }
+
+    /* --- EXTRACT FAMILY INITIALS --- */
+    function getInitials(item) {
+      const parts = [];
+      if (item.lastName) parts.push(item.lastName.charAt(0));
+      if (item.firstName) parts.push(item.firstName.charAt(0));
+      return parts.join('.') || 'ע';
+    }
+
+    /* --- GENERATE PLACEHOLDER HTML --- */
+    function createPlaceholderHTML(item, isModal = false) {
+      const initials = getInitials(item);
+      const displayLastName = item.lastName ? `משפחת ${item.lastName}` : item.fullName;
+      const cssClass = isModal ? 'modal-placeholder' : 'card-placeholder';
+
+      return `
+        <div class="${cssClass}">
+          <svg class="placeholder-sofa-bg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"></path>
+            <path d="M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path>
+            <path d="M4 18v2"></path>
+            <path d="M20 18v2"></path>
+            <line x1="8" y1="11" x2="8" y2="15"></line>
+            <line x1="16" y1="11" x2="16" y2="15"></line>
+          </svg>
+          <div class="placeholder-monogram">${initials}</div>
+          <div class="placeholder-caption">${displayLastName}</div>
+          <div class="placeholder-project-tag">עפרה על הספה</div>
+        </div>
+      `;
+    }
+
+    /* --- POPULATE YEAR FILTER DROPDOWN --- */
+    function populateYearSelect() {
+      if (!yearSelect) return;
+      const currentSelected = yearSelect.value;
+      const yearsSet = new Set();
+
+      allFamilies.forEach(f => {
+        if (f.year) {
+          yearsSet.add(f.year.trim());
+        }
+      });
+
+      const sortedYears = Array.from(yearsSet).sort((a, b) => a.localeCompare(b, 'he', { numeric: true }));
+
+      let optionsHTML = '<option value="">כל שנות ההגעה</option>';
+      sortedYears.forEach(yr => {
+        const isSelected = yr === currentSelected ? 'selected' : '';
+        optionsHTML += `<option value="${yr}" ${isSelected}>שנת ${yr}</option>`;
+      });
+
+      yearSelect.innerHTML = optionsHTML;
+    }
+
+    /* --- UPDATE FILTER COUNTS --- */
+    function updateFilterCounts() {
+      const elAll = document.getElementById('count-all');
+      const elFounders = document.getElementById('count-founders');
+      const elStories = document.getElementById('count-stories');
+
+      if (elAll) elAll.textContent = allFamilies.length;
+      if (elFounders) elFounders.textContent = allFamilies.filter(f => f.isFounder).length;
+      if (elStories) elStories.textContent = allFamilies.filter(f => f.hasStory).length;
+    }
+
+    /* --- FILTER & SORT LOGIC --- */
+    function applyFiltersAndRender() {
+      const q = currentSearchTerm.trim().toLowerCase();
+
+      let filtered = allFamilies.filter(item => {
+        // Quick Category Filter
+        if (currentFilter === 'founders' && !item.isFounder) return false;
+        if (currentFilter === 'stories' && !item.hasStory) return false;
+
+        // Year Dropdown Filter
+        if (currentYearFilter && item.year !== currentYearFilter) return false;
+
+        // Search Query Filter
+        if (q) {
+          const matchName = item.fullName.toLowerCase().includes(q);
+          const matchYear = item.year.toLowerCase().includes(q);
+          const matchStory = item.story ? item.story.toLowerCase().includes(q) : false;
+          if (!matchName && !matchYear && !matchStory) return false;
+        }
+
+        return true;
+      });
+
+      // Sorting
+      if (currentSort === 'name') {
+        filtered.sort((a, b) => {
+          const lastA = a.lastName || '';
+          const lastB = b.lastName || '';
+          const compLast = lastA.localeCompare(lastB, 'he');
+          if (compLast !== 0) return compLast;
+          return (a.firstName || '').localeCompare(b.firstName || '', 'he');
+        });
+      } else if (currentSort === 'year-asc') {
+        filtered.sort((a, b) => (a.year || '9999').localeCompare(b.year || '9999', 'he', { numeric: true }));
+      } else if (currentSort === 'year-desc') {
+        filtered.sort((a, b) => (b.year || '0000').localeCompare(a.year || '0000', 'he', { numeric: true }));
+      } else if (currentSort === 'id') {
+        filtered.sort((a, b) => a.id - b.id);
+      }
+
+      displayedFamilies = filtered;
+      renderCards();
+      renderResultsBanner();
+      updateFilterCounts();
+    }
+
+    /* --- RENDER RESULTS BANNER --- */
+    function renderResultsBanner() {
+      if (!resultsCountEl) return;
+      const count = displayedFamilies.length;
+      const total = allFamilies.length;
+
+      let label = `מציג ${count} משפחות`;
+      if (count !== total) {
+        label = `מציג ${count} מתוך ${total} משפחות`;
+      }
+      if (currentSearchTerm) {
+        label += ` עבור "${currentSearchTerm}"`;
+      }
+      resultsCountEl.textContent = label;
+
+      // Show/hide reset button
+      const hasActiveFilters = currentFilter !== 'all' || currentSearchTerm !== '' || currentYearFilter !== '';
+      if (btnResetFilters) {
+        btnResetFilters.classList.toggle('visible', hasActiveFilters);
+      }
+    }
+
+    /* --- RENDER CARDS GRID --- */
+    function renderCards() {
+      if (!cardsGrid) return;
+
+      if (displayedFamilies.length === 0) {
+        cardsGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <h3>לא נמצאו משפחות תואמות</h3>
+            <p>נסו לשנות את מילות החיפוש, לבחור שנה אחרת או לאפס את הסינונים כדי לצפות בכל משפחות הארכיון.</p>
+            <button type="button" class="btn-card-action" style="max-width: 200px; margin: 0 auto;" onclick="resetAllFilters()">
+              אפס סינונים והצג הכל
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      displayedFamilies.forEach((item, index) => {
+        // Founders Badge
+        const founderBadgeHTML = item.isFounder ? `
+          <span class="badge-founder" title="ממייסדי היישוב עפרה">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+            </svg>
+            <span>דור המייסדים</span>
+          </span>
+        ` : '<span></span>';
+
+        // Year Badge
+        const yearBadgeHTML = item.year ? `
+          <span class="badge-year" title="שנת הגעה לעפרה">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>${item.year}</span>
+          </span>
+        ` : '';
+
+        // Visual (Photo vs Placeholder)
+        let visualHTML = '';
+        if (item.hasImage) {
+          visualHTML = `
+            <img 
+              src="${item.imageUrl}" 
+              alt="משפחת ${item.fullName}" 
+              class="card-photo" 
+              loading="lazy" 
+              referrerpolicy="no-referrer"
+              onerror="this.onerror=null; this.parentElement.innerHTML = createPlaceholderHTML(displayedFamilies[${index}]);"
+            >
+          `;
+        } else {
+          visualHTML = createPlaceholderHTML(item);
+        }
+
+        // Excerpt
+        let excerptHTML = '';
+        if (item.hasStory) {
+          const firstChars = item.story.replace(/\r?\n|\r/g, ' ').substring(0, 160).trim();
+          excerptHTML = `<p class="card-excerpt">${firstChars}...</p>`;
+        } else {
+          excerptHTML = `<p class="card-excerpt empty">סיפור המשפחה טרם תועד במאגר הדיגיטלי.</p>`;
+        }
+
+        // Facebook link icon button
+        let fbBtnHTML = '';
+        if (item.fbLink) {
+          fbBtnHTML = `
+            <a 
+              href="${item.fbLink}" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="card-fb-icon-link" 
+              title="לצפייה בפוסט המקורי בפייסבוק"
+              onclick="event.stopPropagation();"
+              aria-label="לצפייה בפוסט בפייסבוק עבור משפחת ${item.fullName}"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+          `;
+        }
+
+        let cardInner = '';
+        if (item.isVertical) {
+          // Vertical layout: photo on the RIGHT, text on the LEFT, full-width button at the BOTTOM
+          cardInner = `
+            <article 
+              class="family-card card-vertical" 
+              tabindex="0" 
+              role="button" 
+              aria-label="צפה בפרטים וסיפור של משפחת ${item.fullName}" 
+              onclick="openDetailModal(${index}, this)"
+              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); openDetailModal(${index}, this);}"
+            >
+              <div class="card-main-area">
+                <div class="card-visual-wrapper">
+                  ${visualHTML}
+                </div>
+                <div class="card-body">
+                  <div class="card-badges-inline">
+                    ${founderBadgeHTML}
+                    ${yearBadgeHTML}
+                  </div>
+                  <h3 class="card-name">${item.fullName}</h3>
+                  <div class="card-meta-row">
+                    <span>${item.year ? `שנת הגעה: <strong>${item.year}</strong>` : 'שנת הגעה: לא צוינה'}</span>
+                  </div>
+                  ${excerptHTML}
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn-card-action" tabindex="-1">
+                  <span>קראו את הסיפור והפרטים</span>
+                  <span aria-hidden="true">⭠</span>
+                </button>
+                ${fbBtnHTML}
+              </div>
+            </article>
+          `;
+        } else {
+          // Horizontal layout: photo on TOP, text in the middle, full-width button at the BOTTOM
+          cardInner = `
+            <article 
+              class="family-card" 
+              tabindex="0" 
+              role="button" 
+              aria-label="צפה בפרטים וסיפור של משפחת ${item.fullName}" 
+              onclick="openDetailModal(${index}, this)"
+              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); openDetailModal(${index}, this);}"
+            >
+              <div class="card-main-area">
+                <div class="card-visual-wrapper">
+                  ${visualHTML}
+                  <div class="card-badges-top">
+                    ${founderBadgeHTML}
+                    ${yearBadgeHTML}
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-name">${item.fullName}</h3>
+                  <div class="card-meta-row">
+                    <span>${item.year ? `שנת הגעה: <strong>${item.year}</strong>` : 'שנת הגעה: לא צוינה'}</span>
+                  </div>
+                  ${excerptHTML}
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn-card-action" tabindex="-1">
+                  <span>קראו את הסיפור והפרטים</span>
+                  <span aria-hidden="true">⭠</span>
+                </button>
+                ${fbBtnHTML}
+              </div>
+            </article>
+          `;
+        }
+        html += cardInner;
+      });
+
+      cardsGrid.innerHTML = html;
+    }
+
+    /* --- AUTOCOMPLETE LOGIC --- */
+    function updateAutocomplete() {
+      if (!autocompleteDropdown) return;
+      const q = currentSearchTerm.trim().toLowerCase();
+
+      if (!q || q.length < 1) {
+        autocompleteDropdown.classList.remove('open');
+        autocompleteDropdown.innerHTML = '';
+        selectedAutocompleteIndex = -1;
+        if (searchInput) searchInput.setAttribute('aria-expanded', 'false');
+        return;
+      }
+
+      // Find matches in allFamilies
+      const matches = allFamilies.filter(f => {
+        return f.fullName.toLowerCase().includes(q) || (f.year && f.year.toLowerCase().includes(q));
+      }).slice(0, 8); // Top 8 matches
+
+      if (matches.length === 0) {
+        autocompleteDropdown.classList.remove('open');
+        autocompleteDropdown.innerHTML = '';
+        selectedAutocompleteIndex = -1;
+        if (searchInput) searchInput.setAttribute('aria-expanded', 'false');
+        return;
+      }
+
+      let dropdownHTML = '';
+      matches.forEach((item, idx) => {
+        // Highlight matching query in name
+        const regex = new RegExp(`(${escapeRegex(q)})`, 'gi');
+        const highlightedName = item.fullName.replace(regex, '<mark>$1</mark>');
+
+        // Small thumbnail / monogram
+        const initials = getInitials(item);
+        const avatarHTML = item.hasImage
+          ? `<img src="${item.imageUrl}" alt="" referrerpolicy="no-referrer" onerror="this.outerHTML='${initials}'">`
+          : initials;
+
+        const founderPill = item.isFounder
+          ? `<span class="badge-founder" style="font-size:0.75rem; padding: 2px 8px;">👑 מייסדים</span>`
+          : '';
+
+        const yearPill = item.year
+          ? `<span class="badge-year" style="font-size:0.75rem; padding: 2px 7px;">${item.year}</span>`
+          : '';
+
+        dropdownHTML += `
+          <li 
+            class="autocomplete-item" 
+            role="option" 
+            data-index="${idx}"
+            onclick="selectAutocompleteItem(${item.id})"
+          >
+            <div class="ac-info">
+              <div class="ac-avatar">${avatarHTML}</div>
+              <div class="ac-name">${highlightedName}</div>
+            </div>
+            <div class="ac-badges">
+              ${founderPill}
+              ${yearPill}
+            </div>
+          </li>
+        `;
+      });
+
+      autocompleteDropdown.innerHTML = dropdownHTML;
+      autocompleteDropdown.classList.add('open');
+      if (searchInput) searchInput.setAttribute('aria-expanded', 'true');
+      selectedAutocompleteIndex = -1;
+    }
+
+    function escapeRegex(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function selectAutocompleteItem(familyId) {
+      autocompleteDropdown.classList.remove('open');
+      if (searchInput) searchInput.setAttribute('aria-expanded', 'false');
+
+      const foundIndex = displayedFamilies.findIndex(f => f.id === familyId);
+      if (foundIndex !== -1) {
+        openDetailModal(foundIndex);
+      } else {
+        // Find in allFamilies
+        const item = allFamilies.find(f => f.id === familyId);
+        if (item) {
+          // Reset search so the family is visible, then open modal
+          currentSearchTerm = item.fullName;
+          if (searchInput) searchInput.value = item.fullName;
+          if (btnClearSearch) btnClearSearch.classList.add('visible');
+          applyFiltersAndRender();
+          const newIdx = displayedFamilies.findIndex(f => f.id === familyId);
+          if (newIdx !== -1) {
+            openDetailModal(newIdx);
+          }
+        }
+      }
+    }
+
+    /* --- DETAIL MODAL LOGIC --- */
+    function openDetailModal(index, triggerElement = null) {
+      if (index < 0 || index >= displayedFamilies.length) return;
+      currentModalIndex = index;
+      if (triggerElement) lastActiveCardElement = triggerElement;
+
+      const item = displayedFamilies[index];
+
+      // Update Modal Header Title
+      modalFamilyName.textContent = item.fullName;
+
+      // Update Badges
+      let badgesHTML = '';
+      if (item.isFounder) {
+        badgesHTML += `
+          <span class="badge-founder">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+            </svg>
+            <span>דור המייסדים</span>
+          </span>
+        `;
+      }
+      if (item.year) {
+        badgesHTML += `
+          <span class="badge-year">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>שנת הגעה: ${item.year}</span>
+          </span>
+        `;
+      }
+      modalBadges.innerHTML = badgesHTML;
+
+      // Update Visual
+      if (item.hasImage) {
+        modalImageContainer.innerHTML = `
+          <img 
+            src="${item.imageUrl}" 
+            alt="משפחת ${item.fullName}" 
+            class="modal-photo" 
+            referrerpolicy="no-referrer"
+            title="לחצו להגדלה של התמונה"
+            onclick="openLightbox('${item.imageUrl}', 'משפחת ${item.fullName}')"
+            onerror="this.onerror=null; this.parentElement.innerHTML = createPlaceholderHTML(displayedFamilies[${index}], true);"
+          >
+        `;
+      } else {
+        modalImageContainer.innerHTML = createPlaceholderHTML(item, true);
+      }
+
+      // Update Facebook Link Button
+      if (item.fbLink) {
+        modalFbContainer.innerHTML = `
+          <a href="${item.fbLink}" target="_blank" rel="noopener noreferrer" class="btn-modal-facebook">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <span>לצפייה בפוסט המקורי בפייסבוק</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+        `;
+      } else {
+        modalFbContainer.innerHTML = '';
+      }
+
+      // E: If there is no story, remove 'הסיפור של המשפחה' completely
+      if (item.hasStory && item.story && item.story.trim()) {
+        if (modalBody) modalBody.classList.remove('no-story');
+        if (modalStoryCol) modalStoryCol.style.display = '';
+
+        const rawStory = item.story;
+        // Split by lines or ~ separators
+        const sections = rawStory.split(/\r?\n/);
+        let storyHTML = '';
+
+        sections.forEach(line => {
+          const trimmed = line.trim();
+          if (!trimmed) return;
+
+          if (trimmed === '~' || trimmed === '~~~') {
+            storyHTML += `
+              <div class="story-divider-ornament" aria-hidden="true">
+                <span>❦</span>
+              </div>
+            `;
+          } else if (trimmed.includes('אוצרים זכרונות') || trimmed.includes('#עפרה_על_הספה')) {
+            storyHTML += `
+              <div class="story-signature-box">
+                ${trimmed}
+              </div>
+            `;
+          } else {
+            storyHTML += `<p class="story-paragraph">${trimmed}</p>`;
+          }
+        });
+
+        modalStoryBody.innerHTML = storyHTML;
+      } else {
+        if (modalBody) modalBody.classList.add('no-story');
+        if (modalStoryCol) modalStoryCol.style.display = 'none';
+        modalStoryBody.innerHTML = '';
+      }
+
+      // Update Navigation & Counter ('X מתוך Y')
+      modalCounter.textContent = `${index + 1} מתוך ${displayedFamilies.length}`;
+      btnModalPrev.disabled = index === 0;
+      btnModalNext.disabled = index === displayedFamilies.length - 1;
+
+      // Open Modal
+      modalBackdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      btnModalClose.focus();
+      try {
+        history.replaceState(null, '', '#family=' + encodeURIComponent(item.id));
+      } catch(e) {}
+    }
+
+    function closeDetailModal() {
+      modalBackdrop.classList.remove('open');
+      document.body.style.overflow = '';
+      try {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      } catch(e) {}
+      if (lastActiveCardElement) {
+        lastActiveCardElement.focus();
+        lastActiveCardElement = null;
+      }
+    }
+
+    function navigateModal(direction) {
+      const newIndex = currentModalIndex + direction;
+      if (newIndex >= 0 && newIndex < displayedFamilies.length) {
+        openDetailModal(newIndex);
+      }
+    }
+
+    /* --- LIGHTBOX LOGIC --- */
+    function openLightbox(imageUrl, title) {
+      if (!lightboxModal || !lightboxImage) return;
+      lightboxImage.src = imageUrl;
+      lightboxImage.alt = title;
+      lightboxModal.classList.add('open');
+    }
+
+    function closeLightbox() {
+      if (!lightboxModal) return;
+      lightboxModal.classList.remove('open');
+    }
+
+    /* --- RESET ALL FILTERS --- */
+    function resetAllFilters() {
+      currentFilter = 'all';
+      currentSearchTerm = '';
+      currentYearFilter = '';
+      currentSort = 'name';
+
+      if (searchInput) searchInput.value = '';
+      if (btnClearSearch) btnClearSearch.classList.remove('visible');
+      if (yearSelect) yearSelect.value = '';
+      if (sortSelect) sortSelect.value = 'name';
+
+      document.querySelectorAll('.filter-chip').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-filter') === 'all');
+      });
+
+      applyFiltersAndRender();
+    }
+
+    /* --- EVENT LISTENERS INITIALIZATION --- */
+    function initEventListeners() {
+      // Search input live typing
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          currentSearchTerm = e.target.value;
+          if (btnClearSearch) {
+            btnClearSearch.classList.toggle('visible', currentSearchTerm.length > 0);
+          }
+          updateAutocomplete();
+          applyFiltersAndRender();
+        });
+
+        // Search keyboard navigation for Autocomplete
+        searchInput.addEventListener('keydown', (e) => {
+          const items = autocompleteDropdown.querySelectorAll('.autocomplete-item');
+          if (autocompleteDropdown.classList.contains('open') && items.length > 0) {
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              selectedAutocompleteIndex = (selectedAutocompleteIndex + 1) % items.length;
+              items.forEach((it, idx) => it.classList.toggle('selected', idx === selectedAutocompleteIndex));
+            } else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              selectedAutocompleteIndex = (selectedAutocompleteIndex - 1 + items.length) % items.length;
+              items.forEach((it, idx) => it.classList.toggle('selected', idx === selectedAutocompleteIndex));
+            } else if (e.key === 'Enter') {
+              if (selectedAutocompleteIndex >= 0 && selectedAutocompleteIndex < items.length) {
+                e.preventDefault();
+                items[selectedAutocompleteIndex].click();
+              }
+            } else if (e.key === 'Escape') {
+              autocompleteDropdown.classList.remove('open');
+              searchInput.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      }
+
+      // Clear search button
+      if (btnClearSearch) {
+        btnClearSearch.addEventListener('click', () => {
+          currentSearchTerm = '';
+          searchInput.value = '';
+          btnClearSearch.classList.remove('visible');
+          autocompleteDropdown.classList.remove('open');
+          searchInput.setAttribute('aria-expanded', 'false');
+          searchInput.focus();
+          applyFiltersAndRender();
+        });
+      }
+
+      // Close autocomplete on click outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-input-wrapper')) {
+          autocompleteDropdown.classList.remove('open');
+          if (searchInput) searchInput.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Filter chips click
+      document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const filter = chip.getAttribute('data-filter');
+          currentFilter = filter;
+          document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          applyFiltersAndRender();
+        });
+      });
+
+      // Year selector change
+      if (yearSelect) {
+        yearSelect.addEventListener('change', (e) => {
+          currentYearFilter = e.target.value;
+          applyFiltersAndRender();
+        });
+      }
+
+      // Sort selector change
+      if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+          currentSort = e.target.value;
+          applyFiltersAndRender();
+        });
+      }
+
+      // Reset filters button
+      if (btnResetFilters) {
+        btnResetFilters.addEventListener('click', resetAllFilters);
+      }
+
+      // Refresh live data button
+      if (btnRefresh) {
+        btnRefresh.addEventListener('click', () => loadLiveData(true));
+      }
+
+      // Modal buttons
+      if (btnModalClose) {
+        btnModalClose.addEventListener('click', closeDetailModal);
+      }
+      if (btnModalPrev) {
+        btnModalPrev.addEventListener('click', () => navigateModal(-1));
+      }
+      if (btnModalNext) {
+        btnModalNext.addEventListener('click', () => navigateModal(1));
+      }
+
+      // Modal backdrop click
+      if (modalBackdrop) {
+        modalBackdrop.addEventListener('click', (e) => {
+          if (e.target === modalBackdrop) {
+            closeDetailModal();
+          }
+        });
+      }
+
+      // Lightbox close
+      if (lightboxModal) {
+        lightboxModal.addEventListener('click', closeLightbox);
+      }
+      if (btnCloseLightbox) {
+        btnCloseLightbox.addEventListener('click', closeLightbox);
+      }
+
+      // Keyboard Controls (ESC, Left, Right)
+      document.addEventListener('keydown', (e) => {
+        if (lightboxModal && lightboxModal.classList.contains('open')) {
+          if (e.key === 'Escape') {
+            closeLightbox();
+          }
+          return;
+        }
+
+        if (modalBackdrop && modalBackdrop.classList.contains('open')) {
+          if (e.key === 'Escape') {
+            closeDetailModal();
+          } else if (e.key === 'ArrowRight') {
+            navigateModal(-1); // Previous in RTL
+          } else if (e.key === 'ArrowLeft') {
+            navigateModal(1);  // Next in RTL
+          }
+        }
+      });
+
+      // Accessibility: Font Size Adjusters
+      const btnFontNormal = document.getElementById('btn-font-normal');
+      const btnFontLarge = document.getElementById('btn-font-large');
+      const btnFontXLarge = document.getElementById('btn-font-xlarge');
+      const fontBtns = [btnFontNormal, btnFontLarge, btnFontXLarge];
+
+      fontBtns.forEach(btn => {
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const scale = btn.getAttribute('data-scale');
+          document.documentElement.style.setProperty('--font-scale', scale);
+          fontBtns.forEach(b => b && b.classList.remove('active'));
+          btn.classList.add('active');
+          try {
+            localStorage.setItem('ofra_font_scale', scale);
+          } catch(e) {}
+        });
+      });
+
+      // Load saved font scale
+      try {
+        const savedScale = localStorage.getItem('ofra_font_scale');
+        if (savedScale) {
+          document.documentElement.style.setProperty('--font-scale', savedScale);
+          fontBtns.forEach(b => {
+            if (b) b.classList.toggle('active', b.getAttribute('data-scale') === savedScale);
+          });
+        }
+      } catch(e) {}
+
+      // Accessibility: Contrast Mode Toggle
+      const btnContrast = document.getElementById('btn-contrast-toggle');
+      if (btnContrast) {
+        btnContrast.addEventListener('click', () => {
+          document.body.classList.toggle('high-contrast');
+          const isHigh = document.body.classList.contains('high-contrast');
+          try {
+            localStorage.setItem('ofra_high_contrast', isHigh ? 'true' : 'false');
+          } catch(e) {}
+        });
+
+        // Load saved contrast mode
+        try {
+          if (localStorage.getItem('ofra_high_contrast') === 'true') {
+            document.body.classList.add('high-contrast');
+          }
+        } catch(e) {}
+      }
+
+      // Scroll to Top Button
+      const btnScrollTop = document.getElementById('btn-scroll-top');
+      if (btnScrollTop) {
+        btnScrollTop.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Hash change listener for browser back/forward and deep links
+      window.addEventListener('hashchange', checkUrlHash);
+    }
+
+    /* --- DEEP LINKING URL HASH --- */
+    function checkUrlHash() {
+      const hash = window.location.hash;
+      if (!hash) return;
+      const match = hash.match(/family=([^&]+)|open=([^&]+)/);
+      if (match) {
+        const val = decodeURIComponent(match[1] || match[2]).trim();
+        const num = parseInt(val, 10);
+        let targetIdx = -1;
+        if (!isNaN(num)) {
+          targetIdx = displayedFamilies.findIndex(f => f.id === num);
+          if (targetIdx === -1 && num >= 0 && num < displayedFamilies.length) {
+            targetIdx = num;
+          }
+        } else {
+          targetIdx = displayedFamilies.findIndex(f => f.fullName.includes(val) || (f.lastName && f.lastName.includes(val)));
+        }
+        if (targetIdx !== -1) {
+          openDetailModal(targetIdx);
+        }
+      }
+    }
+
+    /* --- LOAD DATA FROM JSON (REQUEST C) --- */
+    async function loadJsonData() {
+      try {
+        const res = await fetch('./data.json?_t=' + Date.now());
+        if (res.ok) {
+          const items = await res.json();
+          const list = Array.isArray(items) ? items : items.families;
+          if (list && list.length > 0) {
+            allFamilies = list.map(f => ({
+              ...f,
+              hasStory: Boolean(f.story && f.story.trim()),
+              hasImage: Boolean(f.imageUrl || f.image),
+              imageUrl: f.imageUrl || f.image
+            }));
+            populateYearSelect();
+            applyFiltersAndRender();
+            setSyncStatus('offline');
+            return true;
+          }
+        }
+      } catch (err) {
+        console.log("data.json fetch skipped (using embedded data):", err);
+      }
+      return false;
+    }
+
+    /* --- INITIAL STARTUP --- */
+    document.addEventListener('DOMContentLoaded', () => {
+      populateYearSelect();
+      applyFiltersAndRender();
+      initEventListeners();
+      checkUrlHash();
+
+      // Load fresh data.json if running on web server / Vercel
+      loadJsonData();
+    });
+  </script>
+</body>
+</html>

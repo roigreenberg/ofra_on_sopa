@@ -1,0 +1,46 @@
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Screenshots, DOM dumps & test artifacts
+*.png
+*.log
+dom_edge.html
+dom_output.html
+dumped_dom.html
+test_*.html
+*.ps1
+!assemble_index.ps1
+embedded_data.js
+capture_*.ps1
+check_*.ps1
+dump_*.ps1
+find_*.ps1
+inspect_*.ps1
+install_*.ps1
+verify_*.ps1
+make_*.ps1
+setup_*.ps1
+copy_*.ps1
+restore_*.ps1
+update_*.ps1
+add_*.ps1
+run_*.ps1
+match_*.ps1
+build_html.ps1
+export_json.ps1
+unmatched_fams.json
+mapping_report.json
+match_results.json
+source_files.txt
+unused_files.txt
+config_path.txt
+sheet.csv
+
+# Node / Temp
+node_modules/
+.vscode/
+.idea/
