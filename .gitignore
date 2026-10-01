@@ -16,6 +16,7 @@ render_qr.html
 test_*.html
 *.ps1
 !assemble_index.ps1
+!sync_texts.ps1
 embedded_data.js
 capture_*.ps1
 check_*.ps1

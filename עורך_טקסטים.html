@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>עורך טקסטים - עפרה על הספה</title>
+  <style>
+    :root {
+      --bg: #f9f6f0;
+      --card-bg: #ffffff;
+      --primary: #8b3a2b;
+      --primary-hover: #702e22;
+      --accent: #d48b54;
+      --text: #2c2523;
+      --text-muted: #6b6360;
+      --border: #e3dcd3;
+      --success: #2e7d32;
+      --font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      z-index: 10;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-title h1 {
+      font-size: 1.25rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .header-title span {
+      background: #f0eae1;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .actions-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--primary-hover); }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover { background: #f5f0eb; }
+
+    .btn-save-file {
+      background: var(--success);
+      color: white;
+    }
+    .btn-save-file:hover { background: #256629; }
+
+    .app-body {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Left Sidebar: List of families */
+    .sidebar {
+      background: #ffffff;
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .search-box {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+      background: #faf7f2;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .search-box input:focus { border-color: var(--primary); }
+
+    .families-list {
+      flex: 1;
+      overflow-y: auto;
+      list-style: none;
+    }
+
+    .family-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0ebe4;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.15s;
+    }
+    .family-item:hover { background: #fdfaf6; }
+    .family-item.active {
+      background: #f7ebe8;
+      border-right: 4px solid var(--primary);
+    }
+
+    .family-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .family-item-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .family-item-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .family-item-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .badge-has-story { background: #e8f5e9; color: #2e7d32; }
+    .badge-no-story { background: #ffebee; color: #c62828; }
+    .badge-founder { background: #fff3e0; color: #e65100; }
+
+    /* Right Main Panel: Editor Form */
+    .editor-pane {
+      background: var(--bg);
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .editor-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-group input, .form-group textarea {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .story-group textarea {
+      width: 100%;
+      height: 380px;
+      line-height: 1.7;
+      resize: vertical;
+      font-size: 1rem;
+    }
+
+    .story-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .preview-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .preview-thumb {
+      width: 72px;
+      height: 96px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #eee;
+      border: 1px solid var(--border);
+    }
+
+    .preview-meta h2 {
+      font-size: 1.4rem;
+      color: var(--primary);
+    }
+
+    .status-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333333;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 100;
+    }
+    .status-toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-title">
+      <h1>עורך הטקסטים • עפרה על הספה</h1>
+      <span id="families-count-tag">טוען...</span>
+    </div>
+
+    <div class="actions-bar">
+      <button type="button" class="btn-secondary" id="btn-open-file" title="פתח קובץ data.json מהמחשב">
+        📂 פתח קובץ data.json
+      </button>
+      <button type="button" class="btn-save-file" id="btn-save-direct" title="שמור ישירות לקובץ data.json">
+        💾 שמור ישירות ל-data.json
+      </button>
+      <button type="button" class="btn-primary" id="btn-download" title="הורד קובץ data.json מעודכן">
+        ⭳ הורד קובץ data.json
+      </button>
+    </div>
+  </header>
+
+  <div class="app-body">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="חיפוש לפי שם משפחה, שם פרטי או שנה...">
+      </div>
+      <ul class="families-list" id="families-list"></ul>
+    </aside>
+
+    <!-- Main Editor -->
+    <main class="editor-pane">
+      <div class="editor-card">
+        <div class="preview-bar">
+          <img src="" alt="" class="preview-thumb" id="edit-thumb">
+          <div class="preview-meta">
+            <h2 id="edit-display-title">בחר משפחה מהרשימה</h2>
+            <p id="edit-display-sub" style="color: var(--text-muted); font-size: 0.9rem;"></p>
+          </div>
+        </div>
+
+        <form id="edit-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="f-last-name">שם משפחה</label>
+              <input type="text" id="f-last-name">
+            </div>
+
+            <div class="form-group">
+              <label for="f-first-name">שם פרטי</label>
+              <input type="text" id="f-first-name">
+            </div>
+
+            <div class="form-group">
+              <label for="f-year">שנת הגעה</label>
+              <input type="text" id="f-year" placeholder="למשל: 1976">
+            </div>
+
+            <div class="form-group">
+              <label for="f-founder">דור המייסדים (1975-1976)</label>
+              <input type="text" id="f-founder" readonly style="background: #f9f9f9;">
+            </div>
+
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label for="f-fb">קישור לפוסט בפייסבוק (אם קיים)</label>
+              <input type="text" id="f-fb" placeholder="https://www.facebook.com/...">
+            </div>
+
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label for="f-image">קובץ תמונה (בתיקיית images)</label>
+              <input type="text" id="f-image">
+            </div>
+          </div>
+
+          <div class="form-group story-group">
+            <label for="f-story">סיפור המשפחה המלא (אפשר להדביק פסקאות, מרכאות ומלל חופשי ללא חשש):</label>
+            <textarea id="f-story" placeholder="כתוב או הדבק כאן את סיפור המשפחה..."></textarea>
+            <div class="story-footer">
+              <span id="char-count">0 תווים | 0 מילים</span>
+              <span>השינויים נשמרים אוטומטית ברשימה בעת ההקלדה</span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <div class="status-toast" id="toast">השינויים נשמרו בהצלחה!</div>
+
+  <script>
+    let families = [];
+    let currentIndex = 0;
+    let fileHandle = null;
+
+    const listEl = document.getElementById('families-list');
+    const searchInput = document.getElementById('search-input');
+    const countTag = document.getElementById('families-count-tag');
+    const toastEl = document.getElementById('toast');
+
+    const fLastName = document.getElementById('f-last-name');
+    const fFirstName = document.getElementById('f-first-name');
+    const fYear = document.getElementById('f-year');
+    const fFounder = document.getElementById('f-founder');
+    const fFb = document.getElementById('f-fb');
+    const fImage = document.getElementById('f-image');
+    const fStory = document.getElementById('f-story');
+    const charCount = document.getElementById('char-count');
+    const editThumb = document.getElementById('edit-thumb');
+    const editDisplayTitle = document.getElementById('edit-display-title');
+    const editDisplaySub = document.getElementById('edit-display-sub');
+
+    function showToast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), 2500);
+    }
+
+    function checkFounder(year) {
+      if (!year) return false;
+      const s = String(year);
+      return /1975|1976|תשל[הו]|75|76/.test(s);
+    }
+
+    async function init() {
+      try {
+        const res = await fetch('./data.json?_t=' + Date.now());
+        if (res.ok) {
+          const data = await res.json();
+          families = Array.isArray(data) ? data : (data.families || data.value || []);
+        }
+      } catch (e) {
+        console.log("Could not auto-fetch data.json", e);
+      }
+
+      renderList();
+      if (families.length > 0) {
+        selectFamily(0);
+      }
+    }
+
+    function renderList(query = '') {
+      listEl.innerHTML = '';
+      const q = query.trim().toLowerCase();
+
+      const filtered = families.map((fam, originalIdx) => ({ fam, originalIdx })).filter(({ fam }) => {
+        if (!q) return true;
+        const name = (fam.fullName || `${fam.firstName} ${fam.lastName}`).toLowerCase();
+        const yr = (fam.year || '').toLowerCase();
+        return name.includes(q) || yr.includes(q);
+      });
+
+      countTag.textContent = `${filtered.length} מתוך ${families.length} משפחות`;
+
+      filtered.forEach(({ fam, originalIdx }) => {
+        const li = document.createElement('li');
+        li.className = 'family-item' + (originalIdx === currentIndex ? ' active' : '');
+        li.onclick = () => selectFamily(originalIdx);
+
+        const hasStory = fam.story && fam.story.trim().length > 0;
+        const isF = fam.isFounder || checkFounder(fam.year);
+
+        li.innerHTML = `
+          <div class="family-item-info">
+            <div class="family-item-name">${fam.fullName || `${fam.firstName} ${fam.lastName}`}</div>
+            <div class="family-item-sub">${fam.year ? 'שנת הגעה: ' + fam.year : 'שנת הגעה לא צוינה'}</div>
+          </div>
+          <div class="family-item-status">
+            ${isF ? '<span class="badge badge-founder">מייסדים</span>' : ''}
+            <span class="badge ${hasStory ? 'badge-has-story' : 'badge-no-story'}">
+              ${hasStory ? '✓ יש סיפור' : 'ללא סיפור'}
+            </span>
+          </div>
+        `;
+        listEl.appendChild(li);
+      });
+    }
+
+    function selectFamily(idx) {
+      if (idx < 0 || idx >= families.length) return;
+      currentIndex = idx;
+      const fam = families[idx];
+
+      fLastName.value = fam.lastName || '';
+      fFirstName.value = fam.firstName || '';
+      fYear.value = fam.year || '';
+      fFounder.value = (fam.isFounder || checkFounder(fam.year)) ? 'כן (דור המייסדים)' : 'לא';
+      fFb.value = fam.fbLink || '';
+      fImage.value = fam.image || fam.imageUrl || '';
+      fStory.value = fam.story || '';
+
+      editDisplayTitle.textContent = fam.fullName || `${fam.firstName || ''} ${fam.lastName || ''}`.trim() || 'ללא שם';
+      editDisplaySub.textContent = `משפחה מס' ${fam.id || (idx + 1)} • ${fam.year ? 'שנת הגעה: ' + fam.year : ''}`;
+
+      const imgSrc = fam.image || fam.imageUrl;
+      if (imgSrc) {
+        editThumb.src = imgSrc;
+        editThumb.style.display = 'block';
+      } else {
+        editThumb.style.display = 'none';
+      }
+
+      updateCharCount();
+      document.querySelectorAll('.family-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.querySelector(`.family-item[onclick="selectFamily(${idx})"]`);
+      if (activeEl) activeEl.classList.add('active');
+    }
+
+    function updateCharCount() {
+      const text = fStory.value || '';
+      const chars = text.length;
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      charCount.textContent = `${chars} תווים | ${words} מילים`;
+    }
+
+    // Auto update current family in memory on typing
+    function onFieldChange() {
+      if (!families[currentIndex]) return;
+      const fam = families[currentIndex];
+
+      fam.lastName = fLastName.value.trim();
+      fam.firstName = fFirstName.value.trim();
+      fam.fullName = `${fam.firstName} ${fam.lastName}`.trim();
+      fam.year = fYear.value.trim();
+      fam.isFounder = checkFounder(fam.year);
+      fFounder.value = fam.isFounder ? 'כן (דור המייסדים)' : 'לא';
+      fam.fbLink = fFb.value.trim();
+      fam.image = fImage.value.trim();
+      fam.imageUrl = fam.image;
+      fam.story = fStory.value;
+      fam.hasStory = Boolean(fam.story && fam.story.trim());
+      fam.hasImage = Boolean(fam.image);
+
+      editDisplayTitle.textContent = fam.fullName;
+      updateCharCount();
+      renderList(searchInput.value);
+    }
+
+    [fLastName, fFirstName, fYear, fFb, fImage, fStory].forEach(input => {
+      input.addEventListener('input', onFieldChange);
+    });
+
+    searchInput.addEventListener('input', () => {
+      renderList(searchInput.value);
+    });
+
+    // File System Access API: Open File
+    document.getElementById('btn-open-file').addEventListener('click', async () => {
+      if ('showOpenFilePicker' in window) {
+        try {
+          [fileHandle] = await window.showOpenFilePicker({
+            types: [{ description: 'JSON Files', accept: { 'application/json': ['.json'] } }]
+          });
+          const file = await fileHandle.getFile();
+          const text = await file.text();
+          const parsed = JSON.parse(text);
+          families = Array.isArray(parsed) ? parsed : (parsed.families || parsed.value || []);
+          renderList();
+          selectFamily(0);
+          showToast(`נטען קובץ ${file.name} עם ${families.length} משפחות!`);
+        } catch (err) {
+          if (err.name !== 'AbortError') console.error(err);
+        }
+      } else {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = async e => {
+          const file = e.target.files[0];
+          if (file) {
+            const text = await file.text();
+            const parsed = JSON.parse(text);
+            families = Array.isArray(parsed) ? parsed : (parsed.families || parsed.value || []);
+            renderList();
+            selectFamily(0);
+            showToast(`נטען קובץ ${file.name}!`);
+          }
+        };
+        input.click();
+      }
+    });
+
+    // File System Access API: Direct Save
+    document.getElementById('btn-save-direct').addEventListener('click', async () => {
+      const jsonStr = JSON.stringify(families, null, 4);
+
+      if (fileHandle && 'createWritable' in fileHandle) {
+        try {
+          const writable = await fileHandle.createWritable();
+          await writable.write(jsonStr);
+          await writable.close();
+          showToast('✓ נשמר ישירות ל-data.json במחשב!');
+          return;
+        } catch (err) {
+          console.warn("Direct save failed, fallback to save picker", err);
+        }
+      }
+
+      if ('showSaveFilePicker' in window) {
+        try {
+          fileHandle = await window.showSaveFilePicker({
+            suggestedName: 'data.json',
+            types: [{ description: 'JSON Files', accept: { 'application/json': ['.json'] } }]
+          });
+          const writable = await fileHandle.createWritable();
+          await writable.write(jsonStr);
+          await writable.close();
+          showToast('✓ נשמר בהצלחה לקובץ data.json!');
+        } catch (err) {
+          if (err.name !== 'AbortError') console.error(err);
+        }
+      } else {
+        downloadJson();
+      }
+    });
+
+    // Download fallback
+    function downloadJson() {
+      const jsonStr = JSON.stringify(families, null, 4);
+      const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('הקובץ data.json ירד בהצלחה!');
+    }
+
+    document.getElementById('btn-download').addEventListener('click', downloadJson);
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

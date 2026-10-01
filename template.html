@@ -2008,9 +2008,9 @@
           <!-- Sort Selector -->
           <select id="sort-select" class="custom-select" aria-label="מיון רשימה">
             <option value="name">מיון: שם משפחה (א-ת)</option>
+            <option value="name-desc">מיון: שם משפחה (ת-א)</option>
             <option value="year-asc">מיון: שנת הגעה (מהמוקדם)</option>
             <option value="year-desc">מיון: שנת הגעה (מהמאוחר)</option>
-            <option value="id">מיון: סדר מקורי בגיליון</option>
           </select>
         </div>
       </div>
@@ -2124,7 +2124,10 @@
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQuJKQ6Eh_yLHEUPW6027pzHXvnvVCBVvyYB8kIZMX1bl8y6Ijk9Zg2TlDxxMU0cufFpbt0o1PCEdrJ/pub?output=csv";
 
     // Application State
-    let allFamilies = (typeof EMBEDDED_BACKUP_DATA !== 'undefined' && Array.isArray(EMBEDDED_BACKUP_DATA)) ? [...EMBEDDED_BACKUP_DATA] : [];
+    let allFamilies = [];
+    if (typeof EMBEDDED_BACKUP_DATA !== 'undefined' && EMBEDDED_BACKUP_DATA) {
+      allFamilies = Array.isArray(EMBEDDED_BACKUP_DATA) ? [...EMBEDDED_BACKUP_DATA] : (EMBEDDED_BACKUP_DATA.families ? [...EMBEDDED_BACKUP_DATA.families] : []);
+    }
     let displayedFamilies = [];
     let currentFilter = 'all'; // 'all', 'founders', 'stories', 'photos'
     let currentSearchTerm = '';
@@ -2433,12 +2436,18 @@
           if (compLast !== 0) return compLast;
           return (a.firstName || '').localeCompare(b.firstName || '', 'he');
         });
+      } else if (currentSort === 'name-desc') {
+        filtered.sort((a, b) => {
+          const lastA = a.lastName || '';
+          const lastB = b.lastName || '';
+          const compLast = lastB.localeCompare(lastA, 'he');
+          if (compLast !== 0) return compLast;
+          return (b.firstName || '').localeCompare(a.firstName || '', 'he');
+        });
       } else if (currentSort === 'year-asc') {
         filtered.sort((a, b) => (a.year || '9999').localeCompare(b.year || '9999', 'he', { numeric: true }));
       } else if (currentSort === 'year-desc') {
         filtered.sort((a, b) => (b.year || '0000').localeCompare(a.year || '0000', 'he', { numeric: true }));
-      } else if (currentSort === 'id') {
-        filtered.sort((a, b) => a.id - b.id);
       }
 
       displayedFamilies = filtered;
@@ -3155,12 +3164,18 @@
           const items = await res.json();
           const list = Array.isArray(items) ? items : items.families;
           if (list && list.length > 0) {
-            allFamilies = list.map(f => ({
-              ...f,
-              hasStory: Boolean(f.story && f.story.trim()),
-              hasImage: Boolean(f.imageUrl || f.image),
-              imageUrl: f.imageUrl || f.image
-            }));
+            allFamilies = list.map(f => {
+              const yr = (f.year || '').toString().trim();
+              return {
+                ...f,
+                year: yr,
+                fullName: f.fullName || `${f.firstName || ''} ${f.lastName || ''}`.trim(),
+                isFounder: (typeof f.isFounder === 'boolean') ? f.isFounder : isFounderYear(yr),
+                hasStory: Boolean(f.story && f.story.trim()),
+                hasImage: Boolean(f.imageUrl || f.image),
+                imageUrl: f.imageUrl || f.image
+              };
+            });
             populateYearSelect();
             applyFiltersAndRender();
             setSyncStatus('offline');
