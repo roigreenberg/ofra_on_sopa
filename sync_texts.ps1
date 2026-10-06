@@ -53,7 +53,7 @@ if ($FromCsv) {
     # קריאת data.json הקיים כדי לשמר מאפיינים טכניים (מידות תמונה וכדומה)
     $existingRaw = [System.IO.File]::ReadAllText($jsonPath, [System.Text.Encoding]::UTF8)
     $existingObj = ConvertFrom-Json $existingRaw
-    $existingList = if ($existingObj.value) { $existingObj.value } elseif ($existingObj.families) { $existingObj.families } else { $existingObj }
+    $existingList = if ($existingObj -is [array]) { $existingObj } elseif ($existingObj.PSObject.Properties['families']) { $existingObj.families } elseif ($existingObj.PSObject.Properties['value']) { $existingObj.value } else { $existingObj }
     
     $existingMap = @{}
     foreach ($item in $existingList) {
@@ -106,7 +106,7 @@ if ($FromCsv) {
     }
 
     # שמירה ל-data.json ללא BOM
-    $jsonFormatted = ConvertTo-Json -InputObject @($updatedFamilies) -Depth 10
+    $jsonFormatted = $updatedFamilies | ConvertTo-Json -Depth 10
     $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
     [System.IO.File]::WriteAllText($jsonPath, $jsonFormatted, $utf8NoBom)
 
@@ -133,7 +133,7 @@ if ($FromCsv) {
 Write-Host "קורא את data.json..." -ForegroundColor Cyan
 $jsonRaw = [System.IO.File]::ReadAllText($jsonPath, [System.Text.Encoding]::UTF8)
 $jsonObj = ConvertFrom-Json $jsonRaw
-$families = if ($jsonObj.value) { $jsonObj.value } elseif ($jsonObj.families) { $jsonObj.families } else { $jsonObj }
+$families = if ($jsonObj -is [array]) { $jsonObj } elseif ($jsonObj.PSObject.Properties['families']) { $jsonObj.families } elseif ($jsonObj.PSObject.Properties['value']) { $jsonObj.value } else { $jsonObj }
 
 # ניקוי וסדר למבנה data.json
 $cleanList = @()
@@ -185,7 +185,7 @@ foreach ($it in $families) {
 }
 
 # כתיבת data.json כמערך תקני ללא BOM
-$jsonFormatted = ConvertTo-Json -InputObject @($cleanList) -Depth 10
+$jsonFormatted = $cleanList | ConvertTo-Json -Depth 10
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 [System.IO.File]::WriteAllText($jsonPath, $jsonFormatted, $utf8NoBom)
 Write-Host "✓ נשמר data.json תקני ומסודר (ללא BOM, סך הכל $($cleanList.Count) משפחות)." -ForegroundColor Green
