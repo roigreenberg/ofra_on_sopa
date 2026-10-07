@@ -322,10 +322,17 @@
       max-width: 1340px;
       margin: 0 auto;
       display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .header-top-row {
+      display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 20px;
       flex-wrap: wrap;
+      width: 100%;
     }
 
     .brand-group {
@@ -372,6 +379,125 @@
       border-radius: var(--radius-full);
       margin-top: 4px;
       font-weight: 600;
+    }
+
+    /* Project Description / Intro Card */
+    .project-intro-card {
+      background: #fdfbf7;
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 22px 28px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .project-intro-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--color-border-subtle);
+      padding-bottom: 10px;
+    }
+
+    .project-intro-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-toggle-intro {
+      background: var(--bg-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-primary);
+      border-radius: var(--radius-full);
+      padding: 4px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+    }
+
+    .btn-toggle-intro:hover {
+      background: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary);
+    }
+
+    .project-intro-content {
+      max-height: 3500px;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 1;
+    }
+
+    .project-intro-content.collapsed {
+      max-height: 0;
+      opacity: 0;
+      margin: 0;
+    }
+
+    .project-intro-body {
+      font-size: 1.02rem;
+      line-height: 1.82;
+      color: var(--color-text-main);
+    }
+
+    .project-intro-body p {
+      margin-bottom: 12px;
+    }
+
+    .project-intro-thanks {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--color-border);
+      color: var(--color-text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.8;
+    }
+
+    .project-intro-thanks p {
+      margin-bottom: 8px;
+    }
+
+    .project-intro-signature {
+      margin-top: 16px;
+      font-weight: 700;
+      color: var(--color-primary);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 1.05rem;
+    }
+
+    .project-intro-signature .sig-place {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+
+    @media (max-width: 680px) {
+      .project-intro-card {
+        padding: 16px 16px;
+        border-radius: 12px;
+      }
+      .project-intro-body {
+        font-size: 0.95rem;
+        line-height: 1.72;
+      }
+      .project-intro-thanks {
+        font-size: 0.92rem;
+        line-height: 1.72;
+      }
     }
 
     /* Sticky Search & Navigation Bar */
@@ -1904,42 +2030,90 @@
   <!-- Site Header -->
   <header class="site-header">
     <div class="header-container">
-      <div class="brand-group">
-        <div class="brand-icon-wrapper" aria-hidden="true">
-          <!-- Armchair / Sofa Icon -->
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"></path>
-            <path d="M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path>
-            <path d="M4 18v2"></path>
-            <path d="M20 18v2"></path>
-            <line x1="8" y1="11" x2="8" y2="15"></line>
-            <line x1="16" y1="11" x2="16" y2="15"></line>
-          </svg>
+      <div class="header-top-row">
+        <div class="brand-group">
+          <div class="brand-icon-wrapper" aria-hidden="true">
+            <!-- Armchair / Sofa Icon -->
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"></path>
+              <path d="M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path>
+              <path d="M4 18v2"></path>
+              <path d="M20 18v2"></path>
+              <line x1="8" y1="11" x2="8" y2="15"></line>
+              <line x1="16" y1="11" x2="16" y2="15"></line>
+            </svg>
+          </div>
+          <div class="brand-titles">
+            <h1>עפרה על הספה</h1>
+            <div class="subtitle">פרויקט התיעוד הקהילתי של משפחות ומייסדי היישוב עפרה</div>
+            <div class="curator-badge">אוצר זכרונות ומראיין: ברוך גרינברג</div>
+          </div>
         </div>
-        <div class="brand-titles">
-          <h1>עפרה על הספה</h1>
-          <div class="subtitle">פרויקט התיעוד הקהילתי של משפחות ומייסדי היישוב עפרה</div>
-          <div class="curator-badge">אוצר זכרונות ומראיין: ברוך גרינברג</div>
+
+        <!-- Accessibility Toolbar for Older Adults -->
+        <div class="a11y-toolbar" role="region" aria-label="נגישות והתאמת תצוגה">
+          <span class="a11y-label">גודל גופן:</span>
+          <div class="font-size-group" role="group" aria-label="בחירת גודל טקסט">
+            <button type="button" class="btn-font-size active" id="btn-font-normal" data-scale="1" title="גודל רגיל">א</button>
+            <button type="button" class="btn-font-size" id="btn-font-large" data-scale="1.15" title="גודל מוגדל">א+</button>
+            <button type="button" class="btn-font-size" id="btn-font-xlarge" data-scale="1.3" title="גודל ענק לקריאה נוחה">א++</button>
+          </div>
+
+          <button type="button" class="btn-contrast-toggle" id="btn-contrast-toggle" title="החלפת ניגודיות גבוהה">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a10 10 0 0 1 0 20z"></path>
+            </svg>
+            <span>ניגודיות</span>
+          </button>
         </div>
       </div>
 
-      <!-- Accessibility Toolbar for Older Adults -->
-      <div class="a11y-toolbar" role="region" aria-label="נגישות והתאמת תצוגה">
-        <span class="a11y-label">גודל גופן:</span>
-        <div class="font-size-group" role="group" aria-label="בחירת גודל טקסט">
-          <button type="button" class="btn-font-size active" id="btn-font-normal" data-scale="1" title="גודל רגיל">א</button>
-          <button type="button" class="btn-font-size" id="btn-font-large" data-scale="1.15" title="גודל מוגדל">א+</button>
-          <button type="button" class="btn-font-size" id="btn-font-xlarge" data-scale="1.3" title="גודל ענק לקריאה נוחה">א++</button>
+      <!-- Project Intro / תיאור הפרויקט -->
+      <article class="project-intro-card" id="project-intro-card" aria-labelledby="intro-heading">
+        <div class="project-intro-header">
+          <h2 class="project-intro-title" id="intro-heading">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>על הפרויקט • דברי האוצר</span>
+          </h2>
+          <button type="button" class="btn-toggle-intro" id="btn-toggle-intro" aria-expanded="true" aria-controls="project-intro-content">
+            <span id="toggle-intro-text">קפל תיאור</span>
+            <span class="toggle-icon" id="toggle-intro-icon" aria-hidden="true">⯅</span>
+          </button>
         </div>
 
-        <button type="button" class="btn-contrast-toggle" id="btn-contrast-toggle" title="החלפת ניגודיות גבוהה">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M12 2a10 10 0 0 1 0 20z"></path>
-          </svg>
-          <span>ניגודיות</span>
-        </button>
-      </div>
+        <div class="project-intro-content" id="project-intro-content">
+          <div class="project-intro-body">
+            <p>כשפרסמתי אי שם בתחילת ימי הקורונה את הקריאה לוותיקי עפרה המזמינה אותם להתיישב על הספה ולהצטלם, לא העליתי בדעתי לאן תיקח אותי החוויה הזו.</p>
+            <p>מודה. אידיאולוגיה גדולה לא עמדה בבסיס הקריאה ההיא.</p>
+            <p>אהבה גדולה לאנשים יש בי, אלא שמזרעו של אברהם אני, ביישן בן ביישן. המצלמה, מפילה מחיצות, מחברת את הלבבות, ומוציאה מהפנים אל החוץ את מה שהלב מסתיר מהעין.</p>
+            <p>חלום היה לי, להושיב אנשי מעלה על ספה תלושה בסביבה שאינה טבעית, ולצלם.</p>
+            <p>שלושה שותפים בתמונה. הצלם, המצולם, והרגע. אלא שזמן אף פעם אֵין, וספה אַיִן, ואני לא צילמתי.</p>
+            <p>והנה הגיעה הקורונה. זמן היה בשפע, ומהשמים שלחו לי ספה. ספה שהגיעה זמנה שישבו עליה אנשי מעלה. התחלנו לצלם.</p>
+            <p>לא איש דברים אנוכי. בתחילה דיברה המצלמה, ואני שתקתי. אלא שכשנפתחו הלבבות דיברו גם האנשים, והבנתי ש'הגעתי הביתה'.</p>
+            <p>הבית שאני גר בו כמה עשרות שנים מקבל משמעות. על סיפורי ההקמה והעליה וההיאחזות שמענו. אבל לא כך. לא ממקור ראשון בנחת. לא פנים אל פנים. וכשסיפורים נשמעים, הם נכנסים אל הלב, ונחקקים. כשהתחלתי לכתוב ולשתף גיליתי שאזני אינן היחידות שצמאות. המעגלים התרחבו, דור שני ושלישי עקבו בשקיקה, התחברו לדור המייסדים, והסיפורים עלו וצפו.</p>
+            <p>והנה אני, שהגעתי ליישוב מן המוכן, מוכר וותיק, מתחבר אל שורשי המקום, לחלומות המקימים, לסיפורי העליה, לחיי הקהילה, למריבות שהצמיחו גיבוש, לקשיי היום יום, לדור שני, שלישי, רביעי ואף חמישי, מוצא את עצמי, מתחבר ומבין מה אני ומשפחתי עושים פה.</p>
+            <p>למדתי מה כוחה של מצלמה, וכוחו של סיפור. וכשהמצלמה מספרת סיפור, דבר גדול קורה.</p>
+            <p>יחד עם המצלמה אני אוצר זכרונות, זכרונות שמעצבים זהות.</p>
+            <p>בפרויקט זה מצולמים הותיקים, ותיקי עפרה, מייסדי עפרה שסללו את הדרך, ואלו שהגיעו אחריהם, כולם מספרי הסיפורים.<br>הסיפורים שלהם הם הזכרונות שלנו, והם אלו שהופכים לזהות שלנו. כקהילה, כעם.</p>
+          </div>
+
+          <div class="project-intro-thanks">
+            <p>תודה גדולה מלב נרגש לכל מי שפתח את ליבו בפני והתמסר למצלמה.</p>
+            <p>תודה גדולה לצילה אישתי ולמשפחתי האהובה על הדירבון והתמיכה, ועל העזרה בצילומים.</p>
+            <p>ותודה לריבונו של עולם שיודע את מחשבות הלב ולכוונן.</p>
+            <p>תהא נשמתם הברוכה של כל אלו שזכיתי לצלמם וכבר אינם איתנו, צרורה בצרור החיים.<br>ולואי והזכרונות מהם יהוו לנו נחמה וחוזק.</p>
+            
+            <div class="project-intro-signature">
+              <span class="sig-name">ברוך גרינברג</span>
+              <span class="sig-place">עפרה</span>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </header>
 
@@ -4363,6 +4537,25 @@
       if (btnScrollTop) {
         btnScrollTop.addEventListener('click', () => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Project Intro Collapse / Expand Toggle
+      const btnToggleIntro = document.getElementById('btn-toggle-intro');
+      const introContent = document.getElementById('project-intro-content');
+      const toggleIntroText = document.getElementById('toggle-intro-text');
+      const toggleIntroIcon = document.getElementById('toggle-intro-icon');
+
+      if (btnToggleIntro && introContent) {
+        btnToggleIntro.addEventListener('click', () => {
+          const isCollapsed = introContent.classList.toggle('collapsed');
+          btnToggleIntro.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+          if (toggleIntroText) {
+            toggleIntroText.textContent = isCollapsed ? 'הצג תיאור מלא' : 'קפל תיאור';
+          }
+          if (toggleIntroIcon) {
+            toggleIntroIcon.textContent = isCollapsed ? '⯆' : '⯅';
+          }
         });
       }
 
