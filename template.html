@@ -2125,7 +2125,19 @@
 
     // Application State
     let allFamilies = [];
-    if (typeof EMBEDDED_BACKUP_DATA !== 'undefined' && EMBEDDED_BACKUP_DATA) {
+
+    // Check localStorage cache (updated immediately by עורך_טקסטים.html)
+    try {
+      const localData = localStorage.getItem('ofra_families_data');
+      if (localData) {
+        const parsed = JSON.parse(localData);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          allFamilies = parsed;
+        }
+      }
+    } catch (e) {}
+
+    if (allFamilies.length === 0 && typeof EMBEDDED_BACKUP_DATA !== 'undefined' && EMBEDDED_BACKUP_DATA) {
       allFamilies = Array.isArray(EMBEDDED_BACKUP_DATA) ? [...EMBEDDED_BACKUP_DATA] : (EMBEDDED_BACKUP_DATA.families ? [...EMBEDDED_BACKUP_DATA.families] : []);
     }
     let displayedFamilies = [];
@@ -3176,6 +3188,7 @@
                 imageUrl: f.imageUrl || f.image
               };
             });
+            try { localStorage.setItem('ofra_families_data', JSON.stringify(allFamilies)); } catch (e) {}
             populateYearSelect();
             applyFiltersAndRender();
             setSyncStatus('offline');

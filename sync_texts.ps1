@@ -106,7 +106,7 @@ if ($FromCsv) {
     }
 
     # שמירה ל-data.json ללא BOM
-    $jsonFormatted = $updatedFamilies | ConvertTo-Json -Depth 10
+    $jsonFormatted = ($updatedFamilies | ConvertTo-Json -Depth 10) -replace '\\u0027', "'"
     $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
     [System.IO.File]::WriteAllText($jsonPath, $jsonFormatted, $utf8NoBom)
 
@@ -185,14 +185,18 @@ foreach ($it in $families) {
 }
 
 # כתיבת data.json כמערך תקני ללא BOM
-$jsonFormatted = $cleanList | ConvertTo-Json -Depth 10
+$jsonFormatted = ($cleanList | ConvertTo-Json -Depth 10) -replace '\\u0027', "'"
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 [System.IO.File]::WriteAllText($jsonPath, $jsonFormatted, $utf8NoBom)
 Write-Host "✓ נשמר data.json תקני ומסודר (ללא BOM, סך הכל $($cleanList.Count) משפחות)." -ForegroundColor Green
 
 # כתיבת CSV עבור אקסל עם UTF-8 BOM
-$csvRows | Export-Csv -Path $csvPath -NoTypeInformation -Encoding UTF8
-Write-Host "✓ נוצר קובץ אקסל נוח: טקסטים_עפרה_על_הספה.csv ($($csvRows.Count) שורות)." -ForegroundColor Green
+try {
+    $csvRows | Export-Csv -Path $csvPath -NoTypeInformation -Encoding UTF8
+    Write-Host "✓ נוצר קובץ אקסל נוח: טקסטים_עפרה_על_הספה.csv ($($csvRows.Count) שורות)." -ForegroundColor Green
+} catch {
+    Write-Warning "קובץ ה-CSV נעול כרגע (פתוח באקסל), דילגנו עליו. שאר הקבצים (data.json ו-index.html) עודכנו בהצלחה!"
+}
 
 # עדכון index.html
 if (Test-Path $assemblePath) {
