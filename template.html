@@ -2302,13 +2302,17 @@
     // Application State
     let allFamilies = [];
 
-    // Check localStorage cache (updated immediately by עורך_טקסטים.html)
+    // Check localStorage cache (updated immediately by עורך_טקסטים.html) only if newer than embedded build
     try {
-      const localData = localStorage.getItem('ofra_families_data');
-      if (localData) {
-        const parsed = JSON.parse(localData);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          allFamilies = parsed;
+      const localTs = Number(localStorage.getItem('ofra_families_data_ts') || 0);
+      const embedTs = (typeof EMBEDDED_DATA_TIMESTAMP !== 'undefined') ? EMBEDDED_DATA_TIMESTAMP : 0;
+      if (localTs > embedTs) {
+        const localData = localStorage.getItem('ofra_families_data');
+        if (localData) {
+          const parsed = JSON.parse(localData);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            allFamilies = parsed;
+          }
         }
       }
     } catch (e) {}

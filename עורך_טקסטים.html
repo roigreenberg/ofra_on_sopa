@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -1509,8 +1509,8 @@
         "lastName": "שפיץ",
         "firstName": "שרה ויוסף",
         "fullName": "שרה ויוסף שפיץ",
-        "year": "",
-        "isFounder": false,
+        "year": "1975",
+        "isFounder": true,
         "image": "images/שפיץ יוסף ושרה.jpg",
         "imageUrl": "images/שפיץ יוסף ושרה.jpg",
         "fbLink": "",
@@ -1800,6 +1800,7 @@
       // Instant auto-save to localStorage cache
       try {
         localStorage.setItem('ofra_families_data', JSON.stringify(families, null, 4));
+        localStorage.setItem('ofra_families_data_ts', String(Date.now()));
       } catch (e) {}
 
       renderList(searchInput.value);
@@ -1834,6 +1835,7 @@
       // Always update localStorage cache
       try {
         localStorage.setItem('ofra_families_data', jsonStr);
+        localStorage.setItem('ofra_families_data_ts', String(Date.now()));
       } catch (e) {}
 
       // If we don't have dirHandle yet, try to ask for it
