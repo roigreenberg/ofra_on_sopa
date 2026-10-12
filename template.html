@@ -411,13 +411,19 @@
       gap: 8px;
     }
 
+    .project-intro-footer {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 8px;
+    }
+
     .btn-toggle-intro {
       background: var(--bg-surface);
       border: 1px solid var(--color-border);
       color: var(--color-primary);
       border-radius: var(--radius-full);
-      padding: 4px 14px;
-      font-size: 0.85rem;
+      padding: 6px 16px;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
@@ -2015,16 +2021,6 @@
       <span class="pulse-dot" id="sync-dot"></span>
       <span id="sync-status-text">טוען נתונים חיים מגיליון Google Sheets...</span>
     </div>
-    <div class="top-sync-actions">
-      <button type="button" class="btn-refresh-data" id="btn-refresh" title="סנכרון מיידי מהגיליון">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="23 4 23 10 17 10"></polyline>
-          <polyline points="1 20 1 14 7 14"></polyline>
-          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-        </svg>
-        <span>רענן נתונים</span>
-      </button>
-    </div>
   </aside>
 
   <!-- Site Header -->
@@ -2079,18 +2075,17 @@
             </svg>
             <span>על הפרויקט</span>
           </h2>
-          <button type="button" class="btn-toggle-intro" id="btn-toggle-intro" aria-expanded="true" aria-controls="project-intro-content">
-            <span id="toggle-intro-text">קפל תיאור</span>
-            <span class="toggle-icon" id="toggle-intro-icon" aria-hidden="true">⯅</span>
-          </button>
         </div>
 
-        <div class="project-intro-content" id="project-intro-content">
+        <div class="project-intro-body">
+          <p>כשפרסמתי אי שם בתחילת ימי הקורונה את הקריאה לוותיקי עפרה המזמינה אותם להתיישב על הספה ולהצטלם, לא העליתי בדעתי לאן תיקח אותי החוויה הזו.</p>
+          <p>מודה. אידיאולוגיה גדולה לא עמדה בבסיס הקריאה ההיא.</p>
+          <p>אהבה גדולה לאנשים יש בי, אלא שמזרעו של אברהם אני, ביישן בן ביישן. המצלמה, מפילה מחיצות, מחברת את הלבבות, ומוציאה מהפנים אל החוץ את מה שהלב מסתיר מהעין.</p>
+          <p>חלום היה לי, להושיב אנשי מעלה על ספה תלושה בסביבה שאינה טבעית, ולצלם.</p>
+        </div>
+
+        <div class="project-intro-content collapsed" id="project-intro-content">
           <div class="project-intro-body">
-            <p>כשפרסמתי אי שם בתחילת ימי הקורונה את הקריאה לוותיקי עפרה המזמינה אותם להתיישב על הספה ולהצטלם, לא העליתי בדעתי לאן תיקח אותי החוויה הזו.</p>
-            <p>מודה. אידיאולוגיה גדולה לא עמדה בבסיס הקריאה ההיא.</p>
-            <p>אהבה גדולה לאנשים יש בי, אלא שמזרעו של אברהם אני, ביישן בן ביישן. המצלמה, מפילה מחיצות, מחברת את הלבבות, ומוציאה מהפנים אל החוץ את מה שהלב מסתיר מהעין.</p>
-            <p>חלום היה לי, להושיב אנשי מעלה על ספה תלושה בסביבה שאינה טבעית, ולצלם.</p>
             <p>שלושה שותפים בתמונה. הצלם, המצולם, והרגע. אלא שזמן אף פעם אֵין, וספה אַיִן, ואני לא צילמתי.</p>
             <p>והנה הגיעה הקורונה. זמן היה בשפע, ומהשמים שלחו לי ספה. ספה שהגיעה זמנה שישבו עליה אנשי מעלה. התחלנו לצלם.</p>
             <p>לא איש דברים אנוכי. בתחילה דיברה המצלמה, ואני שתקתי. אלא שכשנפתחו הלבבות דיברו גם האנשים, והבנתי ש'הגעתי הביתה'.</p>
@@ -2112,6 +2107,13 @@
               <span class="sig-place">עפרה</span>
             </div>
           </div>
+        </div>
+
+        <div class="project-intro-footer">
+          <button type="button" class="btn-toggle-intro" id="btn-toggle-intro" aria-expanded="false" aria-controls="project-intro-content">
+            <span id="toggle-intro-text">הצג תיאור מלא</span>
+            <span class="toggle-icon" id="toggle-intro-icon" aria-hidden="true">⯆</span>
+          </button>
         </div>
       </article>
     </div>
