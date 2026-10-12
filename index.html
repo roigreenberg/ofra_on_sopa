@@ -144,6 +144,18 @@
       height: auto;
     }
 
+    button svg,
+    a svg,
+    .nav-arrow svg,
+    .search-icon svg,
+    .project-intro-title svg,
+    .brand-icon-wrapper svg {
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+      overflow: visible;
+    }
+
     /* Accessibility Focus Visible */
     :focus-visible {
       outline: 3px solid var(--color-border-focus);
@@ -437,6 +449,19 @@
       background: var(--color-primary);
       color: #ffffff;
       border-color: var(--color-primary);
+    }
+
+    .btn-toggle-intro svg {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      min-height: 16px;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-toggle-intro[aria-expanded="true"] svg {
+      transform: rotate(180deg);
     }
 
     .project-intro-content {
@@ -1178,14 +1203,25 @@
       justify-content: center;
     }
 
+    .btn-card-action svg {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      min-height: 18px;
+      flex-shrink: 0;
+    }
+
     .family-card:hover .btn-card-action {
       background: var(--color-primary);
       color: #ffffff;
     }
 
+    .card-social-link,
     .card-fb-icon-link {
       width: 42px;
       height: 42px;
+      min-width: 42px;
+      min-height: 42px;
       border-radius: 50%;
       background: var(--color-facebook-bg);
       color: var(--color-facebook);
@@ -1198,6 +1234,18 @@
       border: 1px solid rgba(24, 119, 242, 0.15);
     }
 
+    .card-social-link svg,
+    .card-fb-icon-link svg {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      min-height: 20px;
+      flex-shrink: 0;
+      display: block;
+      fill: currentColor;
+    }
+
+    .card-social-link:hover,
     .card-fb-icon-link:hover {
       background: var(--color-facebook);
       color: #ffffff;
@@ -1465,6 +1513,7 @@
     }
 
     /* Facebook CTA Button in Modal */
+    .btn-modal-post,
     .btn-modal-facebook {
       background: var(--color-facebook);
       color: #ffffff;
@@ -1482,6 +1531,17 @@
       min-height: 52px;
     }
 
+    .btn-modal-post svg,
+    .btn-modal-facebook svg {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      min-height: 20px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .btn-modal-post:hover,
     .btn-modal-facebook:hover {
       background: var(--color-facebook-hover);
       transform: translateY(-2px);
@@ -1590,6 +1650,22 @@
       gap: 8px;
       min-height: 46px;
       transition: all var(--transition-fast);
+    }
+
+    .btn-nav-modal .nav-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .btn-nav-modal svg {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      min-height: 20px;
+      flex-shrink: 0;
+      display: block;
     }
 
     .btn-nav-modal:hover:not(:disabled) {
@@ -1943,6 +2019,7 @@
         gap: 18px;
       }
 
+      .btn-modal-post,
       .btn-modal-facebook {
         font-size: 0.95rem;
         min-height: 48px;
@@ -1962,7 +2039,7 @@
         width: auto;
         min-width: 46px;
         padding: 8px 14px;
-        min-height: 40px;
+        min-height: 42px;
         justify-content: center;
         flex-shrink: 0;
       }
@@ -1972,8 +2049,9 @@
       }
 
       .btn-nav-modal .nav-arrow {
-        font-size: 1.25rem;
-        line-height: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .modal-counter-indicator {
@@ -1987,6 +2065,7 @@
       .top-sync-bar,
       .sticky-controls-wrapper,
       .btn-card-action,
+      .card-social-link,
       .card-fb-icon-link,
       .btn-refresh-data,
       .a11y-toolbar,
@@ -2030,7 +2109,7 @@
         <div class="brand-group">
           <div class="brand-icon-wrapper" aria-hidden="true">
             <!-- Armchair / Sofa Icon -->
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"></path>
               <path d="M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path>
               <path d="M4 18v2"></path>
@@ -2056,7 +2135,7 @@
           </div>
 
           <button type="button" class="btn-contrast-toggle" id="btn-contrast-toggle" title="החלפת ניגודיות גבוהה">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
               <path d="M12 2a10 10 0 0 1 0 20z"></path>
             </svg>
@@ -2069,7 +2148,7 @@
       <article class="project-intro-card" id="project-intro-card" aria-labelledby="intro-heading">
         <div class="project-intro-header">
           <h2 class="project-intro-title" id="intro-heading">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
             </svg>
@@ -2112,7 +2191,9 @@
         <div class="project-intro-footer">
           <button type="button" class="btn-toggle-intro" id="btn-toggle-intro" aria-expanded="false" aria-controls="project-intro-content">
             <span id="toggle-intro-text">הצג תיאור מלא</span>
-            <span class="toggle-icon" id="toggle-intro-icon" aria-hidden="true">⯆</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="toggle-icon" id="toggle-intro-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
           </button>
         </div>
       </article>
@@ -2126,7 +2207,7 @@
       <div class="search-row">
         <div class="search-input-wrapper">
           <div class="search-icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
@@ -2142,7 +2223,12 @@
             aria-expanded="false"
             aria-label="חיפוש משפחה או שנה"
           >
-          <button type="button" class="btn-clear-search" id="btn-clear-search" title="נקה חיפוש" aria-label="נקה חיפוש">✕</button>
+          <button type="button" class="btn-clear-search" id="btn-clear-search" title="נקה חיפוש" aria-label="נקה חיפוש">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
 
           <!-- Autocomplete Dropdown List -->
           <ul class="autocomplete-dropdown" id="autocomplete-dropdown" role="listbox" aria-label="הצעות חיפוש מהירות"></ul>
@@ -2158,7 +2244,7 @@
           </button>
           
           <button type="button" class="filter-chip filter-chip-founder" data-filter="founders" id="chip-founders">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
               <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
             </svg>
             <span>דור המייסדים (1975-76)</span>
@@ -2166,7 +2252,7 @@
           </button>
 
           <button type="button" class="filter-chip" data-filter="stories" id="chip-stories">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
             </svg>
@@ -2197,7 +2283,11 @@
   <div class="results-banner">
     <div class="results-count-text" id="results-count" aria-live="polite">טוען משפחות...</div>
     <button type="button" class="btn-reset-filters" id="btn-reset-filters">
-      <span>✕ אפס סינונים</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+      <span>אפס סינונים</span>
     </button>
   </div>
 
@@ -2219,7 +2309,10 @@
         </div>
         <button type="button" class="btn-modal-close" id="btn-modal-close" aria-label="סגור חלון">
           <span>סגור</span>
-          <span aria-hidden="true">✕</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
         </button>
       </header>
 
@@ -2233,7 +2326,7 @@
           </div>
 
           <!-- Facebook Post Button -->
-          <div id="modal-fb-container"></div>
+          <div id="modal-post-container"></div>
         </div>
 
         <!-- Story Text Column (hidden if no story) -->
@@ -2246,7 +2339,12 @@
       <!-- Modal Footer (Previous / Next Navigation) -->
       <footer class="modal-footer">
         <button type="button" class="btn-nav-modal" id="btn-modal-prev" aria-label="למשפחה הקודמת">
-          <span class="nav-arrow">⭢</span>
+          <span class="nav-arrow" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
           <span class="nav-text">המשפחה הקודמת</span>
         </button>
 
@@ -2254,7 +2352,12 @@
 
         <button type="button" class="btn-nav-modal" id="btn-modal-next" aria-label="למשפחה הבאה">
           <span class="nav-text">המשפחה הבאה</span>
-          <span class="nav-arrow">⭠</span>
+          <span class="nav-arrow" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </span>
         </button>
       </footer>
     </div>
@@ -2262,7 +2365,12 @@
 
   <!-- Fullscreen Lightbox Modal -->
   <div class="lightbox-modal" id="lightbox-modal" role="dialog" aria-modal="true" aria-label="תמונה בגודל מלא" tabindex="-1">
-    <button type="button" class="btn-close-lightbox" id="btn-close-lightbox" aria-label="סגור תמונה מוגדלת">✕</button>
+    <button type="button" class="btn-close-lightbox" id="btn-close-lightbox" aria-label="סגור תמונה מוגדלת">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
     <img src="" alt="" class="lightbox-image" id="lightbox-image">
   </div>
 
@@ -2281,7 +2389,11 @@
       <div class="footer-bottom">
         <div>כל הזכויות שמורות לפרויקט "עפרה על הספה" &bull; היישוב עפרה</div>
         <button type="button" class="btn-scroll-top" id="btn-scroll-top" title="חזרה למעלה">
-          <span>ראש העמוד ⭡</span>
+          <span>ראש העמוד</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
         </button>
       </div>
     </div>
@@ -2292,7 +2404,7 @@
 
   <!-- Embedded Script with Data & Logic -->
   <script>
-    const EMBEDDED_DATA_TIMESTAMP = 1791826984338;
+    const EMBEDDED_DATA_TIMESTAMP = 1791827474052;
 const EMBEDDED_BACKUP_DATA = [
     {
         "id": 1,
@@ -3576,7 +3688,7 @@ const EMBEDDED_BACKUP_DATA = [
     const modalFamilyName = document.getElementById('modal-family-name');
     const modalBadges = document.getElementById('modal-badges');
     const modalImageContainer = document.getElementById('modal-image-container');
-    const modalFbContainer = document.getElementById('modal-fb-container');
+    const modalFbContainer = document.getElementById('modal-post-container') || document.getElementById('modal-fb-container');
     const modalStoryBody = document.getElementById('modal-story-body');
     const modalCounter = document.getElementById('modal-counter');
     const btnModalClose = document.getElementById('btn-modal-close');
@@ -3978,13 +4090,13 @@ const EMBEDDED_BACKUP_DATA = [
               href="${item.fbLink}" 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="card-fb-icon-link" 
+              class="card-social-link" 
               title="לצפייה בפוסט המקורי בפייסבוק"
               onclick="event.stopPropagation();"
               aria-label="לצפייה בפוסט בפייסבוק עבור משפחת ${item.fullName}"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
             </a>
           `;
@@ -4021,7 +4133,10 @@ const EMBEDDED_BACKUP_DATA = [
               <div class="card-footer">
                 <button type="button" class="btn-card-action" tabindex="-1">
                   <span>קראו את הסיפור והפרטים</span>
-                  <span aria-hidden="true">⭠</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>
                 </button>
                 ${fbBtnHTML}
               </div>
@@ -4057,7 +4172,10 @@ const EMBEDDED_BACKUP_DATA = [
               <div class="card-footer">
                 <button type="button" class="btn-card-action" tabindex="-1">
                   <span>קראו את הסיפור והפרטים</span>
-                  <span aria-hidden="true">⭠</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>
                 </button>
                 ${fbBtnHTML}
               </div>
@@ -4227,12 +4345,12 @@ const EMBEDDED_BACKUP_DATA = [
       // Update Facebook Link Button
       if (item.fbLink) {
         modalFbContainer.innerHTML = `
-          <a href="${item.fbLink}" target="_blank" rel="noopener noreferrer" class="btn-modal-facebook">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          <a href="${item.fbLink}" target="_blank" rel="noopener noreferrer" class="btn-modal-post">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
             </svg>
             <span>לצפייה בפוסט המקורי בפייסבוק</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -4551,7 +4669,6 @@ const EMBEDDED_BACKUP_DATA = [
       const btnToggleIntro = document.getElementById('btn-toggle-intro');
       const introContent = document.getElementById('project-intro-content');
       const toggleIntroText = document.getElementById('toggle-intro-text');
-      const toggleIntroIcon = document.getElementById('toggle-intro-icon');
 
       if (btnToggleIntro && introContent) {
         btnToggleIntro.addEventListener('click', () => {
@@ -4559,9 +4676,6 @@ const EMBEDDED_BACKUP_DATA = [
           btnToggleIntro.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
           if (toggleIntroText) {
             toggleIntroText.textContent = isCollapsed ? 'הצג תיאור מלא' : 'קפל תיאור';
-          }
-          if (toggleIntroIcon) {
-            toggleIntroIcon.textContent = isCollapsed ? '⯆' : '⯅';
           }
         });
       }
